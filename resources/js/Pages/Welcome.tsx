@@ -1,22 +1,16 @@
-import { Link } from "@inertiajs/react";
+import Header from '../Layouts/Header';
+import { ReactNode } from 'react';
 
-
-
-export default function Welcome() {
-    
+function Welcome() {
     return (
         <>
-        <div className="flex-col min-h-screen p-4 text-center">
-
-            <h1 className="text-4xl font-black">Vinyl App</h1>
-
-            <Link href="/Collection" className="text-1xl underline text-blue-700 mx-3">View Collection</Link>
-            <Link href="/Search" className="text-1xl underline text-blue-700">Album Finder</Link>
-            <Link href="/Wishlist" className="text-1xl underline text-blue-700 mx-3">Wishlist</Link>
-
-
-        </div>
+            <div className="p-4 text-center">
+                <h1 className="text-4xl font-black">Home</h1>
+            </div>
         </>
     );
 }
 
+Welcome.layout = (page: ReactNode): ReactNode => <Header children={page} />;
+
+export default Welcome;

@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
+import Header from '@/Layouts/Header';
 import { Link } from '@inertiajs/react';
 import axios from 'axios';
 
-const Search = () => {
+function Search() {
 
     const [search, setSearch] = useState('');
     const [token, setToken] = useState('');
@@ -23,10 +24,9 @@ const Search = () => {
     return (
         
         <div>
-            <Link href="/" className="text-1xl underline text-blue-700 mx-3">Home</Link>
-
-            <h1 className='text-4xl font-black'>Search For An Album</h1>
-
+            <div className="p-4 text-center">
+                <h1 className='text-4xl font-black'>Search For An Album</h1>
+            </div>
             
             <div className="w-screen p-2 m-2">
                 <input 
@@ -48,5 +48,7 @@ const Search = () => {
     </div>
      );
 }
- 
+
+Search.layout = (page: ReactNode): ReactNode => <Header children={page} />;
+
 export default Search;

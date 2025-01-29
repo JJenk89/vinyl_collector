@@ -32,6 +32,15 @@ Route::get('/Search', function () {
     ]);
 });
 
+Route::get('/Wishlist', function () {
+    return Inertia::render('Wishlist', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

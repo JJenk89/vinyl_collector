@@ -12,6 +12,7 @@ export default function Welcome() {
 
             <Link href="/Collection" className="text-1xl underline text-blue-700 mx-3">View Collection</Link>
             <Link href="/Search" className="text-1xl underline text-blue-700">Album Finder</Link>
+            <Link href="/Wishlist" className="text-1xl underline text-blue-700 mx-3">Wishlist</Link>
 
 
         </div>

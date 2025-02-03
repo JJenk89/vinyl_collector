@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AlbumController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+Route::get('/album/{id}', [AlbumController::class, 'show']);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -40,6 +43,7 @@ Route::get('/Wishlist', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

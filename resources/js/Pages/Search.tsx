@@ -1,15 +1,19 @@
 import { useState, useEffect, ReactNode } from 'react';
+import { Link } from '@inertiajs/react';
 import Header from '@/Layouts/Header';
 import axios from 'axios';
 
+interface SpotifyItem {
+    id: string;
+    name: string;
+    images: { url: string }[];
+    type: string;
+    artists: string;
+}
 function Search() {
     const [search, setSearch] = useState('');
     const [token, setToken] = useState('');
-    interface SpotifyItem {
-        name: string;
-        images: { url: string }[];
-        type: string;
-    }
+    
     
     const [results, setResults] = useState<SpotifyItem[]>([]);
 
@@ -27,13 +31,6 @@ function Search() {
 
     const searchSpotify = () => {
         if (!search.trim()) return;
-        console.log('Current search value:', search);
-    console.log('Current token:', token);
-
-    if (!search.trim()) {
-        console.log('Search is empty, returning early');
-        return;
-    }
     if (!token) {
         console.log('Token is empty, returning early');
         return;
@@ -46,30 +43,11 @@ function Search() {
         }
     })
     .then(res => {
-        // Log the exact response from your backend
-        console.log("Backend response:", res);
-        console.log("Response data type:", typeof res.data);
-        console.log("Response data keys:", Object.keys(res.data));
-    
-        // If the response is a string, try parsing it
         let data = res.data;
-        if (typeof data === 'string') {
-            try {
-                data = JSON.parse(data);
-                console.log("Parsed data:", data);
-            } catch (e) {
-                console.error("Failed to parse response:", e);
-                return;
-            }
-        }
+        console.log(res.data);
     
         const albumResults = data.albums?.items || [];
         const artistResults = data.artists?.items || [];
-        
-        console.log("Processed results:", {
-            albumResults: albumResults.length,
-            artistResults: artistResults.length
-        });
     
         setResults([...albumResults, ...artistResults]);
     })
@@ -108,7 +86,7 @@ function Search() {
                     <div key={index} className="p-4 border">
                         <h3>{item.name}</h3>
                         {item.images && item.images.length > 0 && (
-                            <img src={item.images[0].url} alt={item.name} className="w-full h-auto" />
+                            <Link href={`/album/${item.id}`}><img src={item.images[0].url} alt={item.name} className="w-full h-auto" /></Link>
                         )}
                         <p>{item.type}</p>
                     </div>

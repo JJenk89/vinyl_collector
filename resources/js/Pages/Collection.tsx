@@ -1,9 +1,9 @@
 import React from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import Header from '@/Layouts/Header';
 
 type Album = {
-    id: number;
+    album_id: number;
     name: string;
     artist: string;
 };
@@ -25,11 +25,12 @@ const Collection = ({ collections }: CollectionProps) => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {collections.map((album) => (
                             <div 
-                                key={album.id} 
+                                key={album.album_id} 
                                 className="bg-white shadow-md rounded-lg p-4"
                             >
                                 <h2 className="text-xl font-semibold">{album.name}</h2>
                                 <p className="text-gray-600">{album.artist}</p>
+                                <Link href={`/album/${album.album_id}`} className="text-red-900">View Album</Link>
                             </div>
                         ))}
                     </div>

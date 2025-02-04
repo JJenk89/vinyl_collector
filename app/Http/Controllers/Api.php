@@ -7,12 +7,7 @@ class ApiController
     public function getSpotifyToken()
     {
 
-        dd([
-            'env_client_id' => env('SPOTIFY_CLIENT_ID'),
-            'config_client_id' => config('services.spotify.client_id'),
-            'env_client_secret' => env('SPOTIFY_CLIENT_SECRET'),
-            'config_client_secret' => config('services.spotify.client_secret')
-        ]);
+
 
         $response = Http::withHeaders([
             'Content-Type' => 'application/x-www-form-urlencoded',

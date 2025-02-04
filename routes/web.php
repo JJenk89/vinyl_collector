@@ -21,9 +21,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::post('/Collection', [CollectionController::class], 'addToCollection');
+Route::post('/collection', [CollectionController::class, 'addToCollection']);
 
-Route::get('/Collection', function () {
+Route::get('/collection', function () {
     return Inertia::render('Collection', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -33,17 +33,9 @@ Route::get('/Collection', function () {
     ]);
 });
 
-Route::get('/Search', function () {
-    return Inertia::render('Search', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::post('/wishlist', [WishlistController::class, 'addToWishlist']);
 
-Route::post('/Wishlist', [WishlistController::class], 'addToWishlist');
-Route::get('/Wishlist', function () {
+Route::get('/wishlist', function () {
     return Inertia::render('Wishlist', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -52,6 +44,17 @@ Route::get('/Wishlist', function () {
         'wishlist' => Wishlist::all(),
     ]);
 });
+
+Route::get('/search', function () {
+    return Inertia::render('Search', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
+
+Route::delete('/wishlist', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
 
 
 Route::get('/dashboard', function () {

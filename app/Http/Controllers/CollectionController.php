@@ -26,7 +26,7 @@ class CollectionController extends Controller
     public function index()
     {
         // Retrieve user's collections
-        $collections = Collection::all();
+        $collections = Collection::all(['album_id', 'name', 'artist']);
 
         return Inertia::render('Collection/Index', [
             'collections' => $collections

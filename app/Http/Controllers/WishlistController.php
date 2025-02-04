@@ -20,16 +20,28 @@ class WishlistController extends Controller
             'artist' => $albumData['artists'][0]['name']
         ]);
 
-        return redirect()->back()->with('message', 'Album added to wishlist');
+        return redirect()->back();
     }
 
     public function index()
     {
         // Retrieve user's wishlist
-        $wishlist = Wishlist::all();
+        $wishlist = Wishlist::all(['album_id', 'name', 'artist']);
 
         return Inertia::render('Wishlist/Index', [
             'wishlist' => $wishlist
         ]);
+    }
+
+    public function removeFromWishlist(Request $request)
+    {
+        $albumId = $request->input('album_id');
+
+        // Remove album from wishlist
+        Wishlist::where('album_id', $albumId)->delete();
+
+        return response()->json(['success' => true]);
+
+        return redirect()->back();
     }
 }

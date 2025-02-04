@@ -1,8 +1,9 @@
-import React from 'react';
+import {useState} from 'react';
 import Header from '@/Layouts/Header';
+import { Link, router } from '@inertiajs/react';
 
 type Album = {
-    id: number;
+    album_id: number;
     name: string;
     artist: string;
 };
@@ -12,6 +13,15 @@ type WishlistProps = {
 };
 
 const Wishlist = ({ wishlist }: WishlistProps) => {
+
+    const [wishlistItems, setWishlistItems] = useState<Album[]>(wishlist);
+    const handleRemoveFromWishlist = (album: any) => {
+        router.post('/wishlist', { album }, {
+            onSuccess: () => {
+                setWishlistItems((prev) => prev.filter((a) => a.album_id !== album.album_id));
+            }
+        });
+    };
     return (
         <div>
             
@@ -24,11 +34,13 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {wishlist.map((album: Album) => (
                             <div 
-                                key={album.id} 
+                                key={album.album_id} 
                                 className="bg-white shadow-md rounded-lg p-4"
                             >
                                 <h2 className="text-xl font-semibold">{album.name}</h2>
                                 <p className="text-gray-600">{album.artist}</p>
+                                <Link href={`/album/${album.album_id}`} className="text-red-900">View Album</Link>
+                                <button onClick={() => handleRemoveFromWishlist(album)}>Delete Album</button>
                             </div>
                         ))}
                     </div>

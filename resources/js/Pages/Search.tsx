@@ -10,12 +10,17 @@ interface SpotifyItem {
     type: string;
     artists: string;
 }
+interface User {
+    id: number;
+    name: string;
+    email: string;
+}
+
 function Search() {
     const [search, setSearch] = useState('');
     const [token, setToken] = useState('');
-    
-    
     const [results, setResults] = useState<SpotifyItem[]>([]);
+
 
     useEffect(() => {
         axios.post('/api/spotify/token')    // This is the route we defined in routes/api.php

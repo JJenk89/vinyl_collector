@@ -25,11 +25,11 @@ const Album = ({ album }: AlbumProps) => {
     };
 
     const handleAddtoCollection = () => {
-        Inertia.post('/Collection', { album: JSON.stringify(album) });
+        Inertia.post('/collection', { album: JSON.stringify(album) });
     };
 
     const handleAddtoWishlist = () => {
-        Inertia.post('/Wishlist', { album: JSON.stringify(album) });
+        Inertia.post('/wishlist', { album: JSON.stringify(album) });
     };
 
     return (

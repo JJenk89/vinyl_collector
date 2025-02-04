@@ -2,9 +2,13 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\CollectionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Collection;
+use App\Models\Wishlist;
+use App\Http\Controllers\WishlistController;
 
 Route::get('/album/{id}', [AlbumController::class, 'show']);
 
@@ -17,12 +21,15 @@ Route::get('/', function () {
     ]);
 });
 
+Route::post('/Collection', [CollectionController::class], 'addToCollection');
+
 Route::get('/Collection', function () {
     return Inertia::render('Collection', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'collections' => Collection::all(),
     ]);
 });
 
@@ -35,12 +42,14 @@ Route::get('/Search', function () {
     ]);
 });
 
+Route::post('/Wishlist', [WishlistController::class], 'addToWishlist');
 Route::get('/Wishlist', function () {
     return Inertia::render('Wishlist', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'wishlist' => Wishlist::all(),
     ]);
 });
 

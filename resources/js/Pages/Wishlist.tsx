@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import Header from '@/Layouts/Header';
 import { Link, router } from '@inertiajs/react';
+import { Inertia } from '@inertiajs/inertia';
 
 type Album = {
     album_id: number;
@@ -18,7 +19,7 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
     const [wishlistItems, setWishlistItems] = useState<Album[]>(wishlist);
 
     const handleRemoveFromWishlist = (album: any) => {
-        router.delete('/wishlist/remove', {
+        Inertia.delete('/wishlist/remove', {
                     data: { album: JSON.stringify(album) },
                     onSuccess: () => {
                         setWishlistItems((prev) => prev.filter((a) => a.album_id !== album.album_id));
@@ -55,7 +56,7 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
                                     className="p-1 bg-red-900 text-white rounded hover:bg-red-700 transition-colors"
                                     onClick={() => handleRemoveFromWishlist(album)}>Delete Album
                                 </button>
-                                
+
                                 </div>
                                 
                             </div>

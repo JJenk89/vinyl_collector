@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Wishlist;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
 
 class WishlistController extends Controller
 {
@@ -20,7 +22,7 @@ class WishlistController extends Controller
             'artist' => $albumData['artists'][0]['name']
         ]);
 
-        return redirect()->back();
+        return redirect()->route('wishlist');
     }
 
     public function index()
@@ -28,8 +30,12 @@ class WishlistController extends Controller
         // Retrieve user's wishlist
         $wishlist = Wishlist::all(['album_id', 'name', 'artist']);
 
-        return Inertia::render('Wishlist/Index', [
-            'wishlist' => $wishlist
+        return Inertia::render('Wishlist', [
+            'wishlist' => $wishlist,
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
         ]);
     }
 
@@ -42,6 +48,6 @@ class WishlistController extends Controller
 
 
 
-        return redirect()->back();
+        return redirect()->route('wishlist');
     }
 }

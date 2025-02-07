@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
 use App\Models\Collection;
 
 class CollectionController extends Controller
@@ -20,7 +22,7 @@ class CollectionController extends Controller
             'artist' => $albumData['artists'][0]['name']
         ]);
 
-        return redirect()->back()->with('message', 'Album added to collection');
+        return redirect()->route('collection');
     }
 
     public function index()
@@ -28,8 +30,12 @@ class CollectionController extends Controller
         // Retrieve user's collections
         $collections = Collection::all(['album_id', 'name', 'artist']);
 
-        return Inertia::render('Collection/Index', [
-            'collections' => $collections
+        return Inertia::render('Collection', [
+            'collections' => $collections,
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
         ]);
     }
 

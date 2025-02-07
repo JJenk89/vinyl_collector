@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Models\Collection;
 use App\Models\Wishlist;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\SearchController;
 
 Route::get('/album/{id}', [AlbumController::class, 'show']);
 
@@ -23,36 +24,13 @@ Route::get('/', function () {
 
 Route::post('/collection', [CollectionController::class, 'addToCollection']);
 
-Route::get('/collection', function () {
-    return Inertia::render('Collection', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-        'collections' => Collection::all(),
-    ]);
-});
+Route::get('/collection', [CollectionController::class, 'index'])->name('collection');
 
 Route::post('/wishlist', [WishlistController::class, 'addToWishlist']);
 
-Route::get('/wishlist', function () {
-    return Inertia::render('Wishlist', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-        'wishlist' => Wishlist::all(),
-    ]);
-});
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');
 
-Route::get('/search', function () {
-    return Inertia::render('Search', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 Route::delete('/wishlist/remove', [WishlistController::class, 'removeFromWishlist']);
 Route::delete('/collection/remove', [CollectionController::class, 'removeFromCollection']);

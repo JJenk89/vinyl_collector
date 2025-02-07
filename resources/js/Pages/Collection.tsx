@@ -44,11 +44,17 @@ const Collection = ({ collections }: CollectionProps) => {
                             <p className="text-gray-600">{album.artist}</p>
 
                             <div className="flex justify-between">
-                            <Link href={`/album/${album.album_id}`} className="p-1 bg-blue-950 text-white rounded">View Album</Link>
+
+                            <Link 
+                                href={`/album/${album.album_id}`} 
+                                className="p-1 bg-blue-950 text-white rounded hover:bg-blue-700 transition-colors">
+                                    View Album
+                            </Link>
                             <button
-                                className="p-1 bg-red-900 text-white rounded"
+                                className="p-1 bg-red-900 text-white rounded hover:bg-red-700 transition-colors"
                                 onClick={() => handleRemoveFromCollection(album)}>Delete Album
                             </button>
+                            
                             </div>
                             
                         </div>

@@ -39,7 +39,7 @@ const Album = ({ album }: AlbumProps) => {
                 <h1 className="text-4xl font-black">{album.name}</h1>
             </div>
 
-            <div className="p-4">
+            <div className="p-2">
 
                 <div className="flex justify-evenly p-4">
                     <button 
@@ -53,7 +53,7 @@ const Album = ({ album }: AlbumProps) => {
                     >Add to Wishlist</button>
                 </div>
 
-                <img src={album.images[0].url} alt={album.name} className="w-64 h-64 mx-auto" />
+                <img src={album.images[0].url} alt={album.name} className="w-64 h-64 mx-auto p-4" />
 
                 <h2 className="text-2xl font-bold mt-4">by {album.artists[0].name}</h2>
 

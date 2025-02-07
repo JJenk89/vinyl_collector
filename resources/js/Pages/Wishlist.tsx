@@ -6,6 +6,7 @@ type Album = {
     album_id: number;
     name: string;
     artist: string;
+    images: { url: string }[];
 };
 
 type WishlistProps = {
@@ -15,13 +16,16 @@ type WishlistProps = {
 const Wishlist = ({ wishlist }: WishlistProps) => {
 
     const [wishlistItems, setWishlistItems] = useState<Album[]>(wishlist);
+
     const handleRemoveFromWishlist = (album: any) => {
-        router.post('/wishlist', { album }, {
-            onSuccess: () => {
-                setWishlistItems((prev) => prev.filter((a) => a.album_id !== album.album_id));
-            }
-        });
+        router.delete('/wishlist/remove', {
+                    data: { album: JSON.stringify(album) },
+                    onSuccess: () => {
+                        setWishlistItems((prev) => prev.filter((a) => a.album_id !== album.album_id));
+                    }
+                });
     };
+
     return (
         <div>
             
@@ -39,8 +43,15 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
                             >
                                 <h2 className="text-xl font-semibold">{album.name}</h2>
                                 <p className="text-gray-600">{album.artist}</p>
-                                <Link href={`/album/${album.album_id}`} className="text-red-900">View Album</Link>
-                                <button onClick={() => handleRemoveFromWishlist(album)}>Delete Album</button>
+
+                                <div className="flex justify-between">
+                                <Link href={`/album/${album.album_id}`} className="p-1 bg-blue-950 text-white rounded">View Album</Link>
+                                <button
+                                    className="p-1 bg-red-900 text-white rounded"
+                                    onClick={() => handleRemoveFromWishlist(album)}>Delete Album
+                                </button>
+                                </div>
+                                
                             </div>
                         ))}
                     </div>

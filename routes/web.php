@@ -54,7 +54,8 @@ Route::get('/search', function () {
     ]);
 });
 
-Route::delete('/wishlist', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
+Route::delete('/wishlist/remove', [WishlistController::class, 'removeFromWishlist']);
+Route::delete('/collection/remove', [CollectionController::class, 'removeFromCollection']);
 
 
 Route::get('/dashboard', function () {

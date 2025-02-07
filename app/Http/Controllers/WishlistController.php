@@ -35,12 +35,12 @@ class WishlistController extends Controller
 
     public function removeFromWishlist(Request $request)
     {
-        $albumId = $request->input('album_id');
+        $albumData = json_decode($request->input('album'), true);
 
         // Remove album from wishlist
-        Wishlist::where('album_id', $albumId)->delete();
+        Wishlist::where('album_id', $albumData['album_id'])->delete();
 
-        return response()->json(['success' => true]);
+
 
         return redirect()->back();
     }

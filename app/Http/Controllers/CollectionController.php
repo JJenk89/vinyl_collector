@@ -32,4 +32,16 @@ class CollectionController extends Controller
             'collections' => $collections
         ]);
     }
+
+    public function removeFromCollection(Request $request)
+    {
+        $albumData = json_decode($request->input('album'), true);
+
+        // Remove album from collection
+        Collection::where('album_id', $albumData['album_id'])->delete();
+
+
+
+        return redirect()->back();
+    }
 }

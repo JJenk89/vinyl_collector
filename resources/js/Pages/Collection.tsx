@@ -1,5 +1,5 @@
-import React from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { useState } from 'react';
+import { Head, Link, router } from '@inertiajs/react';
 import Header from '@/Layouts/Header';
 
 type Album = {
@@ -13,6 +13,18 @@ type CollectionProps = {
 };
 
 const Collection = ({ collections }: CollectionProps) => {
+
+    const [collectionItems, setCollectionItems] = useState<Album[]>(collections);
+
+    const handleRemoveFromCollection = (album: any) => {
+            router.delete('/collection/remove', {
+                        data: { album: JSON.stringify(album) },
+                        onSuccess: () => {
+                            setCollectionItems((prev) => prev.filter((a) => a.album_id !== album.album_id));
+                        }
+                    });
+        };
+
     return (
         <div>
             <Head title="My Collection" />
@@ -25,13 +37,21 @@ const Collection = ({ collections }: CollectionProps) => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {collections.map((album) => (
                             <div 
-                                key={album.album_id} 
-                                className="bg-white shadow-md rounded-lg p-4"
-                            >
-                                <h2 className="text-xl font-semibold">{album.name}</h2>
-                                <p className="text-gray-600">{album.artist}</p>
-                                <Link href={`/album/${album.album_id}`} className="text-red-900">View Album</Link>
+                            key={album.album_id} 
+                            className="bg-white shadow-md rounded-lg p-4"
+                        >
+                            <h2 className="text-xl font-semibold">{album.name}</h2>
+                            <p className="text-gray-600">{album.artist}</p>
+
+                            <div className="flex justify-between">
+                            <Link href={`/album/${album.album_id}`} className="p-1 bg-blue-950 text-white rounded">View Album</Link>
+                            <button
+                                className="p-1 bg-red-900 text-white rounded"
+                                onClick={() => handleRemoveFromCollection(album)}>Delete Album
+                            </button>
                             </div>
+                            
+                        </div>
                         ))}
                     </div>
                 )}

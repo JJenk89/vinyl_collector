@@ -1,11 +1,24 @@
 import { ButtonHTMLAttributes } from 'react';
 
+type Album = {
+    album_id: number;
+    name: string;
+    artist: string;
+    images: { url: string }[];
+};
+interface PrimaryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    album: Album;
+    handleRemove: (album: Album) => void;
+}
+
 export default function PrimaryButton({
+    album,
+    handleRemove,
     className = '',
     disabled,
     children,
     ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
+}: PrimaryButtonProps) {
     return (
         <button
             {...props}
@@ -15,6 +28,7 @@ export default function PrimaryButton({
                 } ` + className
             }
             disabled={disabled}
+            onClick={() => handleRemove(album)}
         >
             {children}
         </button>

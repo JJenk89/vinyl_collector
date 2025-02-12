@@ -1,4 +1,5 @@
 import Header from '../Layouts/Header';
+import AuthComponent from '@/Components/AuthComponent';
 import { ReactNode } from 'react';
 
 function Welcome() {
@@ -6,8 +7,18 @@ function Welcome() {
         <>
             <div className="p-4 text-center">
                 <h1 className="text-4xl font-black">Home</h1>
-                <p>This app lets you search Spotify's API for albums and artists.</p>
-                <p>You can then save your record collection or create a wishlist!</p>
+                <h3>Welcome to My Vinyl!</h3>
+
+                <div className="p-6">
+                    <p>This app is designed for record hunters.</p>
+                    <p>In a shop an ever need to look up the album? Want to know the track list, when it was released and who recorded it?</p>
+                    <p>Find it all here! You can then create a collection to look up while you're hunting for your latest treasured LP, or create a wishlist of albums you want.</p>
+                    <p>Interested?</p>
+                </div>
+
+                <div>
+                    <AuthComponent />
+                </div>
             </div>
         </>
     );

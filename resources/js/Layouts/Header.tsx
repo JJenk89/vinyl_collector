@@ -51,7 +51,7 @@ const Header = ({ children }: { children: ReactNode }) => {
             {isOpen && (
                 <nav className="fixed top-16 left-0 right-0 bottom-0 bg-blue-950 flex flex-col items-center space-y-6 z-40 overflow-y-auto">
 
-                    <Link onClick={() => setIsOpen(false)} href="/" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/' ? "bg-yellow-700 p-1 rounded" : "bg-blue-950"}`}>
+                    <Link onClick={() => setIsOpen(false)} href="/" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 mt-4 ${url === '/' ? "bg-yellow-700 p-1 rounded" : "bg-blue-950"}`}>
                         Home
                     </Link>
 

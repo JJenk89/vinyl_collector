@@ -77,7 +77,7 @@ function Search() {
                     <h1 className='text-4xl font-black'>Search For An Album</h1>
                 </div>
             
-            <div className="w-screen p-2 m-2">
+            <div className=" p-2 m-2">
                 <form role="search" onSubmit={(e) => {
                     e.preventDefault();
                     searchSpotify();

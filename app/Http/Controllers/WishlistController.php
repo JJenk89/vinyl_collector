@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Application;
 
 class WishlistController extends Controller
@@ -28,7 +29,12 @@ class WishlistController extends Controller
     public function index()
     {
         // Retrieve user's wishlist
-        $wishlist = Wishlist::all(['album_id', 'name', 'artist']);
+        //auth check before retrieval of wishlist
+        if (Auth::user()) {
+            $wishlist = Auth::user()->wishlist ?? [];
+        } else {
+            $wishlist = [];
+        }
 
         return Inertia::render('Wishlist', [
             'wishlist' => $wishlist,

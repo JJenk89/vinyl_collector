@@ -1,4 +1,3 @@
-import PrimaryButton from "./PrimaryButton";
 import { Link } from "@inertiajs/react";
 
 const AuthComponent = () => {

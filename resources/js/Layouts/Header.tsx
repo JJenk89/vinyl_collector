@@ -1,10 +1,18 @@
 import { Link, usePage } from '@inertiajs/react';
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { useState, ReactNode } from 'react';
 import { useEffect } from 'react';
 
 const Header = ({ children }: { children: ReactNode }) => {
     const [isOpen, setIsOpen] = useState(false);
     const { url } = usePage();
+    const { auth } = usePage().props as {
+        auth: {
+            user: {
+                name: string;
+            } | null;
+        };
+    }
 
     // Prevent scrolling when the menu is open
     useEffect(() => {
@@ -37,6 +45,8 @@ const Header = ({ children }: { children: ReactNode }) => {
                     <Link href="/wishlist" className={`text-1xl text-gray-200 mx-3 hover:bg-yellow-700 rounded hover:p-1  ${url === '/wishlist' ? "bg-yellow-700 p-1 rounded" : "bg-blue-950"}`}>
                         View Wishlist
                     </Link>
+                    {auth.user ? <Link onClick={() => setIsOpen(false)} href="/dashboard" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/dashboard' ? "bg-yellow-700 p-1 rounded" : "bg-blue-950"}`}>
+                        My Account</Link> : null}
                 </nav>
 
                 {/* Mobile Menu Toggle Button */}
@@ -55,15 +65,35 @@ const Header = ({ children }: { children: ReactNode }) => {
                         Home
                     </Link>
 
-                    <Link onClick={() => setIsOpen(false)} href="/collection" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/collection' ? "bg-yellow-700 p-1 rounded" : "bg-blue-950"}`}>
-                        View Collection
-                    </Link>
                     <Link onClick={() => setIsOpen(false)} href="/search" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/search' ? "bg-yellow-700 p-1 rounded" : "bg-blue-950"}`}>
                         Album Finder
                     </Link>
+
+                    <Link onClick={() => setIsOpen(false)} href="/collection" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/collection' ? "bg-yellow-700 p-1 rounded" : "bg-blue-950"}`}>
+                        View Collection
+                    </Link>
+                    
                     <Link onClick={() => setIsOpen(false)} href="/wishlist" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/wishlist' ? "bg-yellow-700 p-1 rounded" : "bg-blue-950"}`}>
                         View Wishlist
                     </Link>
+                    {auth.user ? 
+                    
+                    <>
+                    <Link onClick={() => setIsOpen(false)} href="/dashboard" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/dashboard' ? "bg-yellow-700 p-1 rounded" : "bg-blue-950"}`}>
+                        My Account</Link>
+                    
+                    <ResponsiveNavLink
+                        method="post"
+                        as="button"
+                        href={route('logout')}
+                        onClick={() => setIsOpen(false)}
+                    >
+                        Log Out
+                    </ResponsiveNavLink>
+                    </>
+                        
+                        
+                        : null}
                 </nav>
             )}
 

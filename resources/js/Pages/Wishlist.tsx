@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import Header from '@/Layouts/Header';
-import { Link } from '@inertiajs/react';
+import { Link, usePage, Head } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
 import SortSelect from '@/Components/SortList';
 
@@ -34,6 +34,14 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
                         setWishlistItems((prev) => prev.filter((a) => a.album_id !== album.album_id));
                     }
                 });
+    };
+
+    const { auth } = usePage().props as {
+        auth: {
+            user: {
+                name: string;
+            } | null;
+        };
     };
 
     const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -75,11 +83,21 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
 
     return (
         <div>
-            
+            <Head title="My Wishlist" />
             <div className="container mx-auto p-6">
                 <h1 className="text-3xl font-bold mb-6">My Wishlist</h1>
 
-                <div className="p-4">
+
+                {!auth.user ? (
+                    <p>You must <Link href='/register' className='underline text-blue-600'>create an account</Link> or <Link href='/login' className='underline text-blue-600'>log in</Link> to create a wishlist!
+                    </p>
+                ) 
+                    
+                    : 
+                    
+                    (
+                        <>
+                            <div className="p-4">
                     <h4 className="text-1xl font-semibold">Sort Wishlist</h4>
 
                     <p className="py-2">By default your list will be sorted by the date you added the album to it</p>
@@ -123,6 +141,12 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
                         ))}
                     </div>
                 )}
+                        </>
+                    )
+                
+                }
+
+                
             </div>
         </div>
     );

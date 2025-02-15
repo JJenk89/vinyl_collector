@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Application;
 use App\Models\Collection;
 
 class CollectionController extends Controller
 {
+
     public function addToCollection(Request $request)
     {
         $albumData = json_decode($request->input('album'), true);
@@ -27,8 +29,13 @@ class CollectionController extends Controller
 
     public function index()
     {
-        // Retrieve user's collections
-        $collections = Collection::all(['album_id', 'name', 'artist']);
+
+        //auth check before retrieval of collection
+        if (Auth::user()) {
+            $collections = Auth::user()->collections ?? [];
+        } else {
+            $collections = [];
+        }
 
         return Inertia::render('Collection', [
             'collections' => $collections,

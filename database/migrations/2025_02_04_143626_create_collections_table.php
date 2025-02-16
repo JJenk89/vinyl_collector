@@ -13,10 +13,17 @@ return new class extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onDelete('cascade');
+
             $table->string('album_id', 255);
             $table->string('name');
             $table->string('artist');
             $table->timestamps();
+
+            $table->unique(['user_id', 'album_id']);
         });
     }
 

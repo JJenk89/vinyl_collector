@@ -24,17 +24,28 @@ Route::get('/', function () {
 });
 
 //collection controllers
-Route::post('/collection', [CollectionController::class, 'addToCollection']);
+Route::middleware(['auth'])->group(function () {
+    Route::post('/collection', [CollectionController::class, 'addToCollection']);
+    Route::delete('/collection/remove', [CollectionController::class, 'removeFromCollection']);
+});
+
+//Index not under auth. A frontend guard is in place
+//the frontend Collection.tsx component conditionally renders based on usePage props
 Route::get('/collection', [CollectionController::class, 'index'])
     ->name('collection');
-Route::delete('/collection/remove', [CollectionController::class, 'removeFromCollection']);
 
 
 //wishlist controllers
-Route::post('/wishlist', [WishlistController::class, 'addToWishlist']);
+Route::middleware(['auth'])->group(function () {
+    Route::post('/wishlist', [WishlistController::class, 'addToWishlist']);
+    Route::delete('/wishlist/remove', [WishlistController::class, 'removeFromWishlist']);
+});
+
+//Index not under auth. A frontend guard is in place
+//the frontend Wishlist.tsx component conditionally renders based on usePage props
 Route::get('/wishlist', [WishlistController::class, 'index'])
     ->name('wishlist');
-Route::delete('/wishlist/remove', [WishlistController::class, 'removeFromWishlist']);
+
 
 //search for album page
 Route::get('/search', [SearchController::class, 'index'])->name('search');

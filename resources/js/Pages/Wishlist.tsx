@@ -29,7 +29,7 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
 
     const handleRemoveFromWishlist = (album: Album) => {
         Inertia.delete('/wishlist/remove', {
-                    data: { album: JSON.stringify(album) },
+                    data: { album_id: album.album_id },
                     onSuccess: () => {
                         setWishlistItems((prev) => prev.filter((a) => a.album_id !== album.album_id));
                     }

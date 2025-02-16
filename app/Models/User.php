@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -44,5 +45,17 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    //get the collection item by user
+    public function collections(): HasMany
+    {
+        return $this->hasMany(Collection::class);
+    }
+
+    //get the wishlist item by user
+    public function wishlist(): HasMany
+    {
+        return $this->hasMany(Wishlist::class);
     }
 }

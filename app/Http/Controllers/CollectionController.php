@@ -19,6 +19,7 @@ class CollectionController extends Controller
 
         // Create or find existing collection entry
         Collection::create([
+            'user_id' => Auth::id(),
             'album_id' => $albumData['id'],
             'name' => $albumData['name'],
             'artist' => $albumData['artists'][0]['name']
@@ -50,8 +51,15 @@ class CollectionController extends Controller
     {
         $albumData = json_decode($request->input('album'), true);
 
+        $validated = $request->validate([
+            'album_id' => 'required',
+        ]);
+
         // Remove album from collection
-        Collection::where('album_id', $albumData['album_id'])->delete();
+        Collection::where([
+            'album_id' => $validated['album_id'],
+            'user_id' => Auth::id()
+        ])->delete();
 
 
 

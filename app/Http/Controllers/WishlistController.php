@@ -16,12 +16,14 @@ class WishlistController extends Controller
     {
         $albumData = json_decode($request->input('album'), true);
 
-        // Create or find existing wishlist entry
+        //matching auth user to add to wishlist
         Wishlist::create([
+            'user_id' => Auth::id(),
             'album_id' => $albumData['id'],
             'name' => $albumData['name'],
             'artist' => $albumData['artists'][0]['name']
         ]);
+
 
         return redirect()->route('wishlist');
     }
@@ -49,8 +51,15 @@ class WishlistController extends Controller
     {
         $albumData = json_decode($request->input('album'), true);
 
+        $validated = $request->validate([
+            'album_id' => 'required',
+        ]);
+
         // Remove album from wishlist
-        Wishlist::where('album_id', $albumData['album_id'])->delete();
+        Wishlist::where([
+            'album_id' => $validated['album_id'],
+            'user_id' => Auth::id()
+        ])->delete();
 
 
 

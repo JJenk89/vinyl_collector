@@ -25,7 +25,7 @@ const Collection = ({ collections }: CollectionProps) => {
 
     const handleRemoveFromCollection = (album: any) => {
             router.delete('/collection/remove', {
-                        data: { album: JSON.stringify(album) },
+                        data: { album_id: album.album_id },
                         onSuccess: () => {
                             setCollectionItems((prev) => prev.filter((a) => a.album_id !== album.album_id));
                         }

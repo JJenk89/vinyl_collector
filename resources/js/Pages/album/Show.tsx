@@ -5,6 +5,7 @@ import { Inertia } from '@inertiajs/inertia';
 type AlbumProps = {
     album: {
         name: string;
+        release_date: string;
         images: { url: string }[];
         artists: { name: string }[];
         tracks: {
@@ -32,6 +33,10 @@ const Album = ({ album }: AlbumProps) => {
         Inertia.post('/wishlist', { album: JSON.stringify(album) });
     };
 
+    const getReleaseYear = (releaseDate: string) => {
+        return releaseDate ? new Date(releaseDate).getFullYear() : "Unknown";
+    }
+
     return (
         <div> {/* Container div - style later */}
 
@@ -56,6 +61,7 @@ const Album = ({ album }: AlbumProps) => {
                 <img src={album.images[0].url} alt={album.name} className="w-64 h-64 mx-auto p-4" />
 
                 <h2 className="text-2xl font-bold mt-4">by {album.artists[0].name}</h2>
+                <span>Release Year: {getReleaseYear(album.release_date)}</span>
 
                 <ul className="mt-4">
                     {album.tracks.items.map((track) => (

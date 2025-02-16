@@ -1,7 +1,8 @@
 import { useState, useEffect, ReactNode } from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import Header from '@/Layouts/Header';
 import axios from 'axios';
+import useSpotifyToken from '@/Hooks/useSpotifyToken';
 
 interface SpotifyItem {
     id: string;
@@ -18,11 +19,27 @@ interface User {
 
 function Search() {
     const [search, setSearch] = useState('');
-    const [token, setToken] = useState('');
-    const [results, setResults] = useState<SpotifyItem[]>([]);
+/*     const [token, setToken] = useState('');
+ */    const [results, setResults] = useState<SpotifyItem[]>([]);
+    const { token, loading, error } = useSpotifyToken();
 
+    const { auth } = usePage().props as {
+        auth: {
+            user: {
+                name: string;
+            } | null;
+    }
+};
 
-    useEffect(() => {
+    //TODO:
+    // 1. Fetch Spotify token ONLY once per hour and for authed users
+    // 2. Update spotify token after expiry
+    // 3. Store token in session storage
+
+    //THIS USE EFFECT IS FOR TESTING ONLY
+    //REPLACE WITH NEW CODE BEFORE DEPLOYMENT
+    //
+    /* useEffect(() => {
         axios.post('/api/spotify/token')    // This is the route we defined in routes/api.php
                                             // It will return a Spotify token
             .then(res => {
@@ -32,34 +49,42 @@ function Search() {
             .catch(error => {
                 console.error('Error fetching Spotify token:', error);
             });
-    }, []);
+    }, []); */
 
+    
     const searchSpotify = () => {
-        if (!search.trim()) return;
-    if (!token) {
+
+        if (!auth.user) return;
+        
+        if (!search.trim() || !token ) return;
+
+        if (!token) {
         console.log('Token is empty, returning early');
         return;
-    }
-
-    axios.get('/api/spotify/search', {
-        params: {
-            query: search.trim(),
-            type: 'album,artist',
         }
+
+        axios.get('/api/spotify/search', {
+                params: {
+                query: search.trim(),
+                type: 'album,artist',
+            }
     })
-    .then(res => {
-        let data = res.data;
-        console.log(res.data);
+        .then(res => {
+            let data = res.data;
+            console.log(res.data);
     
-        const albumResults = data.albums?.items || [];
-        const artistResults = data.artists?.items || [];
+            const albumResults = data.albums?.items || [];
+            const artistResults = data.artists?.items || [];
     
         setResults([...albumResults, ...artistResults]);
-    })
-    .catch(error => {
-        console.error("Full error object:", error);
-    });
+        })
+        .catch(error => {
+            console.error("Full error object:", error);
+        });
     };
+
+    
+
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);

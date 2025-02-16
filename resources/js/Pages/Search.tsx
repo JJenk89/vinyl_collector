@@ -19,8 +19,7 @@ interface User {
 
 function Search() {
     const [search, setSearch] = useState('');
-/*     const [token, setToken] = useState('');
- */    const [results, setResults] = useState<SpotifyItem[]>([]);
+    const [results, setResults] = useState<SpotifyItem[]>([]);
     const { token, loading, error } = useSpotifyToken();
 
     const { auth } = usePage().props as {
@@ -55,7 +54,7 @@ function Search() {
     const searchSpotify = () => {
 
         if (!auth.user) return;
-        
+
         if (!search.trim() || !token ) return;
 
         if (!token) {
@@ -102,7 +101,11 @@ function Search() {
                     <h1 className='text-4xl font-black'>Search For An Album</h1>
                 </div>
             
-            <div className=" p-2 m-2">
+            {!auth.user ?  (<p>Please <Link href="/register" className="underline text-blue-600">register</Link> or <Link href="/login" className="underline text-blue-600"> log in</Link> to use the search function</p>) :
+            
+            ( 
+                <>
+                    <div className=" p-2 m-2">
                 <form role="search" onSubmit={(e) => {
                     e.preventDefault();
                     searchSpotify();
@@ -132,23 +135,42 @@ function Search() {
                             </button>
                         </div>
                     </form>
-            </div>
+                </div>
+                </>
+            )
+            
+            }
+
+            
             
             {/* SEARCH RESULTS */}
 
-            <h2 className="p-4 text-2xl">Search Results</h2>
+            
 
-            <div className="grid grid-cols-2 grid-rows-4 gap-4 border-4">
-                {results.map((item, index) => (
-                    <div key={index} className="p-4 border">
-                        <h3>{item.name}</h3>
-                        {item.images && item.images.length > 0 && (
-                            <Link href={`/album/${item.id}`}><img src={item.images[0].url} alt={item.name} className="w-full h-auto" /></Link>
-                        )}
-                        <p>{item.type}</p>
+            {error && <p>Error: {error.message}</p>}
+
+            {auth.user ? (
+                <>
+                    <h2 className="p-4 text-2xl">Search Results</h2>
+
+                    <div className="grid grid-cols-2 grid-rows-4 gap-4 border-4">
+                        {results.map((item, index) => (
+                            <div key={index} className="p-4 border">
+                                <h3>{item.name}</h3>
+                                {item.images && item.images.length > 0 && (
+                                    <Link href={`/album/${item.id}`}><img src={item.images[0].url} alt={item.name} className="w-full h-auto" /></Link>
+                                )}
+                                <p>{item.type}</p>
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
+                </>
+            )
+            
+                : null
+            
+            }
+            
         </div>
     );
 }

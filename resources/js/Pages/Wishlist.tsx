@@ -89,7 +89,7 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
 
 
                 {!auth.user ? (
-                    <p>You must <Link href='/register' className='underline text-blue-600'>create an account</Link> or <Link href='/login' className='underline text-blue-600'>log in</Link> to create a wishlist!
+                    <p>Please <Link href='/register' className='underline text-blue-600'>create an account</Link> or <Link href='/login' className='underline text-blue-600'>log in</Link> to create a wishlist!
                     </p>
                 ) 
                     

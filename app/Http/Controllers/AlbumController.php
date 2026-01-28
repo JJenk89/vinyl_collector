@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Models\Wishlist;
+use App\Models\Collection;
 
 class AlbumController extends Controller
 {
@@ -22,8 +25,24 @@ class AlbumController extends Controller
         $albumResponse = Http::withToken($token)->get("https://api.spotify.com/v1/albums/{$id}");
         $album = $albumResponse->json();
 
+        // Get user's existing wishlist and collection album IDs
+        $userWishlistIds = [];
+        $userCollectionIds = [];
+
+        if (Auth::check()) {
+            $userWishlistIds = Wishlist::where('user_id', Auth::id())
+                ->pluck('album_id')
+                ->toArray();
+
+            $userCollectionIds = Collection::where('user_id', Auth::id())
+                ->pluck('album_id')
+                ->toArray();
+        }
+
         return Inertia::render('album/Show', [
             'album' => $album,
+            'userWishlistIds' => $userWishlistIds,
+            'userCollectionIds' => $userCollectionIds,
         ]);
     }
 }

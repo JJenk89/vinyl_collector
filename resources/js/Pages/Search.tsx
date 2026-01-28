@@ -22,13 +22,7 @@ function Search() {
     const [results, setResults] = useState<SpotifyItem[]>([]);
     const { token, loading, error } = useSpotifyToken();
 
-    const { auth } = usePage().props as {
-        auth: {
-            user: {
-                name: string;
-            } | null;
-    }
-};
+    
 
     //TODO:
     // 1. Fetch Spotify token ONLY once per hour and for authed users
@@ -53,7 +47,6 @@ function Search() {
     
     const searchSpotify = () => {
 
-        if (!auth.user) return;
 
         if (!search.trim() || !token ) return;
 
@@ -96,14 +89,13 @@ function Search() {
     };
 
     return (
-        <div>
+        <div className="text-gray-300 bg-neutral-950 height-full min-h-screen">
                 <div className="p-4 text-center">
                     <h1 className='text-4xl font-black'>Search For An Album</h1>
                 </div>
             
-            {!auth.user ?  (<p>Please <Link href="/register" className="underline text-blue-600">register</Link> or <Link href="/login" className="underline text-blue-600"> log in</Link> to use the search function</p>) :
             
-            ( 
+            
                 <>
                     <div className=" p-2 m-2">
                 <form role="search" onSubmit={(e) => {
@@ -124,12 +116,12 @@ function Search() {
                                 onChange={handleSearchChange}
                                 onKeyDown={handleKeyDown}
                                 aria-label="Search Spotify by album or artist name"
-                                className="w-2/3 p-2 border rounded"
+                                className="w-2/3 p-2 border-2 rounded border-yellow-800 focus:border-green-400 bg-neutral-950"
                             />
 
                             <button 
                               type="submit" 
-                              className="p-2 bg-blue-950 text-white rounded"
+                              className="p-2 bg-neutral-950 text-gray-300 border-2 border-green-800 rounded"
                               aria-label="Perform search"
                             > Search
                             </button>
@@ -137,9 +129,9 @@ function Search() {
                     </form>
                 </div>
                 </>
-            )
             
-            }
+            
+            
 
             
             
@@ -149,14 +141,14 @@ function Search() {
 
             {error && <p>Error: {error.message}</p>}
 
-            {auth.user ? (
+           
                 <>
-                    <h2 className="p-4 text-2xl">Search Results</h2>
+                    {results.length > 0 && <h2 className="p-4 text-2xl">Search Results</h2>}
 
-                    <div className="grid grid-cols-2 grid-rows-4 gap-4 border-4">
+                    <div className="grid grid-cols-2 grid-rows-4 gap-4 p-4">
                         {results.map((item, index) => (
-                            <div key={index} className="p-4 border">
-                                <h3>{item.name}</h3>
+                            <div key={index} className="p-4 border-2 border-indigo-800 rounded">
+                                <h3 className="text-l font-bold pb-2">{item.name}</h3>
                                 {item.images && item.images.length > 0 && (
                                     <Link href={`/album/${item.id}`}><img src={item.images[0].url} alt={item.name} className="w-full h-auto" /></Link>
                                 )}
@@ -165,11 +157,9 @@ function Search() {
                         ))}
                     </div>
                 </>
-            )
             
-                : null
             
-            }
+                
             
         </div>
     );

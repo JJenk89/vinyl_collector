@@ -16,8 +16,8 @@ function Welcome() {
 
     return (
         <>
-            <div className="p-4 text-center">
-                <h1 className="text-4xl font-black">Home</h1>
+            <div className="p-4 text-center bg-neutral-950 text-gray-300 min-h-screen pt-20">
+                <h1 className="text-4xl font-black ">Home</h1>
                 <h3 className='text-m font-lg m-2'>Welcome to My Vinyl{auth.user ? `, ${auth.user && auth.user.name}` : null}!</h3>
 
                 <div>

@@ -84,12 +84,12 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
     return (
         <div>
             <Head title="My Wishlist" />
-            <div className="container mx-auto p-6">
+            <div className="container mx-auto p-6 bg-neutral-950 text-gray-300 min-h-screen pt-20">
                 <h1 className="text-3xl font-bold mb-6">My Wishlist</h1>
 
 
                 {!auth.user ? (
-                    <p>Please <Link href='/register' className='underline text-blue-600'>create an account</Link> or <Link href='/login' className='underline text-blue-600'>log in</Link> to create a wishlist!
+                    <p>Please <Link href='/register' className='underline text-indigo-600'>create an account</Link> or <Link href='/login' className='underline text-indigo-600'>log in</Link> to create a wishlist!
                     </p>
                 ) 
                     

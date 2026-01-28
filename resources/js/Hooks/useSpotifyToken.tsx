@@ -18,8 +18,8 @@ const useSpotifyToken = () => {
 
     useEffect (() => {
 
-        if (!auth.user) return;
-
+/*         if (!auth.user) return;
+ */
         const fetchToken = async () => {
             try {
                 const response = await axios.post('/api/spotify/token', {

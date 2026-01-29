@@ -18,9 +18,9 @@ const SortSelect: React.FC<SortSelectProps> = ({ options, value, onChange }) => 
                 name="sort" 
                 value={value} 
                 onChange={onChange}
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border border-indigo-600 focus:indigo-300 rounded bg-neutral-950 text-gray-300"
             >
-                <option value="">Sort List By...</option>
+                <option value="" className="">Sort List By...</option>
                 {options.map((option) => (
                     <option key={option.value} value={option.value}>
                         {option.label}

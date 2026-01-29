@@ -26,6 +26,8 @@ export default function Register() {
         <GuestLayout>
             <Head title="Register" />
 
+            <h1 className="text-2xl font-bold text-gray-300 mt-4 mb-4 pb-8">Create an account</h1>
+
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="name" value="User Name" />
@@ -34,7 +36,7 @@ export default function Register() {
                         id="name"
                         name="name"
                         value={data.name}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full border-indigo-500 bg-neutral-900 text-white focus:border-indigo-500 focus:ring-indigo-300"
                         autoComplete="user name"
                         isFocused={true}
                         onChange={(e) => setData('name', e.target.value)}
@@ -52,7 +54,7 @@ export default function Register() {
                         type="email"
                         name="email"
                         value={data.email}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full border-indigo-500 bg-neutral-900 text-white focus:border-indigo-500 focus:ring-indigo-300"
                         autoComplete="username"
                         onChange={(e) => setData('email', e.target.value)}
                         required
@@ -69,7 +71,7 @@ export default function Register() {
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full border-indigo-500 bg-neutral-900 text-white focus:border-indigo-500 focus:ring-indigo-300"
                         autoComplete="new-password"
                         onChange={(e) => setData('password', e.target.value)}
                         required
@@ -89,7 +91,7 @@ export default function Register() {
                         type="password"
                         name="password_confirmation"
                         value={data.password_confirmation}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full border-indigo-500 bg-neutral-900 text-white focus:border-indigo-500 focus:ring-indigo-300"
                         autoComplete="new-password"
                         onChange={(e) =>
                             setData('password_confirmation', e.target.value)
@@ -106,7 +108,7 @@ export default function Register() {
                 <div className="mt-4 flex items-center justify-end">
                     <Link
                         href={route('login')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="rounded-md text-sm text-gray-300 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                         Already registered?
                     </Link>
@@ -116,6 +118,11 @@ export default function Register() {
                     </PrimaryButton>
                 </div>
             </form>
+
+            <div className="mt-16 text-gray-300 underline hover:text-gray-400">
+                <Link href="/">Return Home</Link>
+            </div>
+
         </GuestLayout>
     );
 }

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import Header from '@/Layouts/Header';
 import SortSelect from '@/Components/SortList';
+import PrimaryButton from '@/Components/PrimaryButton';
+import DeleteButton from '@/Components/DeleteButton';
 
 type Album = {
     album_id: number;
@@ -106,27 +108,29 @@ const Collection = ({ collections }: CollectionProps) => {
                     {collections.length === 0 ? (
                         <p>Your collection is empty</p>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-neutral-950">
                             {collectionItems.map((album) => (
                                 <div 
                                 key={album.album_id} 
-                                className="bg-white shadow-md rounded-lg p-4"
+                                className="bg-neutral-950 shadow-md rounded-lg p-4 border border-indigo-700"
                             >
                                 <h2 className="text-xl font-semibold">{album.name}</h2>
-                                <p className="text-gray-600">{album.artist}</p>
+                                <p className="text-gray-500 mt-2 mb-2">{album.artist}</p>
                             
                                 <div className="flex justify-between">
                             
-                                <Link 
-                                    href={`/album/${album.album_id}`} 
-                                    className="p-1 bg-blue-950 text-white rounded hover:bg-blue-700 transition-colors">
+                                <PrimaryButton>
+                                    <Link 
+                                        href={`/album/${album.album_id}`} 
+                                        >
                                         View Album
-                                </Link>
-                                <button
-                                    className="p-1 border-2 border-solid border-red-700 bg-white text-red-900 rounded hover:bg-red-700 hover:text-white transition-colors"
-                                    onClick={() => handleRemoveFromCollection(album)}>Delete Album
-                                </button>
+                                    </Link>
+                                </PrimaryButton>
+
+                                <DeleteButton onClick={() => handleRemoveFromCollection(album)}>
+                                    Delete Album
                                 
+                                </DeleteButton>
                                 </div>
                                 
                             </div>

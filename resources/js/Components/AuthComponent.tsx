@@ -1,16 +1,21 @@
 import { Link } from "@inertiajs/react";
+import PrimaryButton from "./PrimaryButton";
+import SecondaryButton from "./SecondaryButton";
 
 const AuthComponent = () => {
     return ( 
         <div>
             <p className="m-4">Sign up to get started!</p>
 
-            
-            <Link href="/register" className="bg-green-800 text-gray-300 rounded p-2 hover:bg-purple-600">Register</Link>
+            <PrimaryButton className="w-24">
+                <Link href="/register">Register</Link>
+            </PrimaryButton>
 
             <p className="m-4">Already have an account? Then log in below</p>
 
-            <Link href="/login" className="bg-indigo-800 text-gray-300 rounded p-2 hover:bg-purple-600">Login</Link>
+            <SecondaryButton className="w-24">
+                <Link href="/login">Login</Link>
+            </SecondaryButton>
         </div>
      );
 }

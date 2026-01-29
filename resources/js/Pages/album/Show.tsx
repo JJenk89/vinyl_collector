@@ -55,21 +55,21 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
     }
 
     return (
-        <div> {/* Container div - style later */}
+        <div className='bg-neutral-950'> {/* Container div - style later */}
 
-        <nav><Link href="/collection" className="underline m-4">Back to Collection</Link></nav>
+        <nav className='pt-20 pb-10'><Link href="/collection" className="underline m-4 text-gray-300">Back to Collection</Link></nav>
 
             <div className="p-4 text-center">
-                <h1 className="text-4xl font-black">{album.name}</h1>
+                <h1 className="text-4xl font-black text-gray-300">{album.name}</h1>
             </div>
 
-             <div className="p-2">
+             <div className="p-2 text-gray-300">
                 <div className="flex justify-evenly p-4 gap-4">
                     <button 
                         className={`p-3 rounded w-full max-w-xs transition-colors ${
                             isInCollection 
-                                ? 'bg-green-200 cursor-not-allowed opacity-75 border-2 border-green-500' 
-                                : 'bg-blue-600 hover:bg-blue-700 text-white'
+                                ? 'bg-green-200 cursor-not-allowed border-2 bg-opacity-60 border-green-300 text-gray-100' 
+                                : 'bg-indigo-600 hover:bg-blue-700 text-white'
                         }`}
                         onClick={handleAddtoCollection}
                         disabled={isInCollection}
@@ -82,7 +82,7 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
                         <button 
                             className={`p-3 rounded w-full max-w-xs transition-colors ${
                                 isInWishlist 
-                                    ? 'bg-green-200 cursor-not-allowed opacity-75 border-2 border-green-500' 
+                                    ? 'bg-green-200 cursor-not-allowed border-2 bg-opacity-60 border-green-300 text-gray-100' 
                                     : 'bg-blue-600 hover:bg-blue-700 text-white'
                             }`}
                             onClick={handleAddtoWishlist}
@@ -95,7 +95,7 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
                    
                 </div>
 
-                <img src={album.images[0].url} alt={album.name} className="w-64 h-64 mx-auto p-4" />
+                <img src={album.images[0].url} alt={album.name} className="w-64 h-64 mx-auto p-4 shadow-sm shadow-purple-500" />
 
                 <h2 className="text-2xl font-bold mt-4">by {album.artists[0].name}</h2>
                 <span>Release Year: {getReleaseYear(album.release_date)}</span>

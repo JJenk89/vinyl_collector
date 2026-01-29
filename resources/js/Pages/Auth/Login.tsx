@@ -32,6 +32,8 @@ export default function Login({
         <GuestLayout>
             <Head title="Log in" />
 
+            <h1 className="text-2xl font-bold text-gray-300 mt-4 mb-4 pb-8">Log In</h1>
+
             {status && (
                 <div className="mb-4 text-sm font-medium text-green-600">
                     {status}
@@ -47,7 +49,7 @@ export default function Login({
                         type="email"
                         name="email"
                         value={data.email}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full border-indigo-500 bg-neutral-900 text-white focus:border-indigo-500 focus:ring-indigo-300"
                         autoComplete="username"
                         isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
@@ -64,7 +66,7 @@ export default function Login({
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full border-indigo-500 bg-neutral-900 text-white focus:border-indigo-500 focus:ring-indigo-300"
                         autoComplete="current-password"
                         onChange={(e) => setData('password', e.target.value)}
                     />
@@ -81,7 +83,7 @@ export default function Login({
                                 setData('remember', e.target.checked)
                             }
                         />
-                        <span className="ms-2 text-sm text-gray-600">
+                        <span className="ms-2 text-sm text-gray-300">
                             Remember me
                         </span>
                     </label>
@@ -91,7 +93,7 @@ export default function Login({
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            className="rounded-md text-sm text-gray-300 underline hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
                             Forgot your password?
                         </Link>
@@ -102,6 +104,10 @@ export default function Login({
                     </PrimaryButton>
                 </div>
             </form>
+
+            <div className="mt-16 text-gray-300 underline hover:text-gray-400">
+                <Link href="/">Return Home</Link>
+            </div>
         </GuestLayout>
     );
 }

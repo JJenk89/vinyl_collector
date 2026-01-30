@@ -82,14 +82,15 @@ const Header = ({ children }: { children: ReactNode }) => {
                     <Link onClick={() => setIsOpen(false)} href="/dashboard" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/dashboard' ? "bg-purple-950 p-0.5 rounded" : "bg-black"}`}>
                         My Account</Link>
                     
-                    <ResponsiveNavLink
+                    <Link
+                        className="border border-red-600 text-gray-300 p-2 rounded"
                         method="post"
                         as="button"
                         href={route('logout')}
                         onClick={() => setIsOpen(false)}
                     >
                         Log Out
-                    </ResponsiveNavLink>
+                    </Link>
                     </>
                         
                         

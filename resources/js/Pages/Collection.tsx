@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import Header from '@/Layouts/Header';
 import SortSelect from '@/Components/SortList';
@@ -18,6 +18,8 @@ type CollectionProps = {
 const Collection = ({ collections }: CollectionProps) => {
     const [collectionItems, setCollectionItems] = useState<Album[]>(collections);
     const [sortOption, setSortOption] = useState<string>('');
+    const [filter, setFilter] = useState<string>('');
+
     const sortOptions = [
         { value: 'albumAsc', label: 'Album Name (A to Z)' },
         { value: 'albumDesc', label: 'Album Name (Z to A)' },
@@ -26,51 +28,74 @@ const Collection = ({ collections }: CollectionProps) => {
     ];
 
     const handleRemoveFromCollection = (album: any) => {
-            router.delete('/collection/remove', {
-                        data: { album_id: album.album_id },
-                        onSuccess: () => {
-                            setCollectionItems((prev) => prev.filter((a) => a.album_id !== album.album_id));
-                        }
-                    });
-        };
+        router.delete('/collection/remove', {
+            data: { album_id: album.album_id },
+            onSuccess: () => {
+                setCollectionItems((prev) => prev.filter((a) => a.album_id !== album.album_id));
+            }
+        });
+    };
 
     const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
-            const value = e.target.value;
-            setSortOption(value);
-    
-            let sortedItems = [...collectionItems];
-            switch(value) {
+        const value = e.target.value;
+        setSortOption(value);
+    };
+
+    const searchFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setFilter(value);
+    };
+
+    // Use useMemo to compute filtered and sorted items without modifying state
+    const filteredAndSortedItems = useMemo(() => {
+        // Start with the complete collectionItems
+        let items = [...collectionItems];
+
+        // Apply filter if it exists
+        if (filter.trim() !== '') {
+            const searchTerm = filter.toLowerCase();
+            items = items.filter((album) =>
+                album.name.toLowerCase().includes(searchTerm) ||
+                album.artist.toLowerCase().includes(searchTerm)
+            );
+        }
+
+        // Apply sort if selected
+        if (sortOption) {
+            switch(sortOption) {
                 case "albumAsc":
-                    sortedItems = sortedItems.sort((a, b) => a.name.localeCompare(b.name));
+                    items = items.sort((a, b) => a.name.localeCompare(b.name));
                     break;
                 
                 case "albumDesc":
-                    sortedItems = sortedItems.sort((a, b) => b.name.localeCompare(a.name));
+                    items = items.sort((a, b) => b.name.localeCompare(a.name));
                     break;
-    
+
                 case "artistAsc":
-                    sortedItems = sortedItems.sort((a, b) => {
+                    items = items.sort((a, b) => {
                         const artistA = a.artist.replace(/^the\s+/i, '').trim();
                         const artistB = b.artist.replace(/^the\s+/i, '').trim();
                         return artistA.localeCompare(artistB);
                     });
                     break;
-    
+
                 case "artistDesc":
-                    sortedItems = sortedItems.sort((a, b) => {
+                    items = items.sort((a, b) => {
                         const artistA = a.artist.replace(/^the\s+/i, '').trim();
                         const artistB = b.artist.replace(/^the\s+/i, '').trim();
                         return artistB.localeCompare(artistA);
                     });
                     break;
-    
+
                 default:
-                    sortedItems = collections;
+                    // No sorting
+                    break;
             }
-    
-            setCollectionItems(sortedItems);
-        };
-    
+        }
+
+        return items;
+    }, [collectionItems, filter, sortOption]);
+
     const { auth } = usePage().props as {
         auth: {
             user: {
@@ -79,8 +104,6 @@ const Collection = ({ collections }: CollectionProps) => {
         };
     };
 
-
-    
     return (
         <div>
             <Head title="My Collection" />
@@ -93,7 +116,7 @@ const Collection = ({ collections }: CollectionProps) => {
                     </p>
                 ) : (
                     <>
-                        <div className="p-4">
+                        <div className="mb-8">
                     <h4 className="text-1xl font-semibold">Sort Collection</h4>
 
                     <p className="py-2">By default your list will be sorted by the date you added the album to it</p>
@@ -103,13 +126,23 @@ const Collection = ({ collections }: CollectionProps) => {
                         value={sortOption}
                         onChange={handleSort}
                     />
+
+                    <div className="mt-4">
+                        <input
+                            type="text"
+                            value={filter}
+                            onChange={searchFilter}
+                            placeholder="Search Collection..."
+                            className="w-full p-2 border border-indigo-600 rounded bg-neutral-950 text-gray-200"
+                        />
+                    </div>
                 </div>
                 
-                    {collections.length === 0 ? (
+                    {filteredAndSortedItems.length === 0 ? (
                         <p>Your collection is empty</p>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-neutral-950">
-                            {collectionItems.map((album) => (
+                            {filteredAndSortedItems.map((album) => (
                                 <div 
                                 key={album.album_id} 
                                 className="bg-neutral-950 shadow-md rounded-lg p-4 border border-indigo-700"

@@ -13,7 +13,7 @@ type SortSelectProps = {
 
 const SortSelect: React.FC<SortSelectProps> = ({ options, value, onChange }) => {
     return (
-        <div className="p-4">
+        <div className="">
             <select 
                 name="sort" 
                 value={value} 

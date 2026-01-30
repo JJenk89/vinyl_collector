@@ -133,7 +133,7 @@ const Collection = ({ collections }: CollectionProps) => {
                                 </DeleteButton>
                                 </div>
                                 
-                            </div>
+                                </div>
                             ))}
                         </div>
                     )}

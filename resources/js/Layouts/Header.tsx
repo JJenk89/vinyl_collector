@@ -36,11 +36,11 @@ const Header = ({ children }: { children: ReactNode }) => {
 
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex bg-neutral-950 justify-evenly items-center p-4">
-                    <Link  href="/collection" className={`text-1xl text-gray-200 mx-3 hover:underline rounded ${url === '/collection' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
-                        View Collection
-                    </Link>
-                    <Link href="/search" className={`text-1xl text-gray-200 mx-3 hover:underline rounded  ${url === '/search' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
+                    <Link  href="/search" className={`text-1xl text-gray-200 mx-3 hover:underline rounded ${url === '/search' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
                         Album Finder
+                    </Link>
+                    <Link href="/collection" className={`text-1xl text-gray-200 mx-3 hover:underline rounded  ${url === '/collection' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
+                        View Collection
                     </Link>
                     <Link href="/wishlist" className={`text-1xl text-gray-200 mx-3 hover:underline rounded  ${url === '/wishlist' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
                         View Wishlist

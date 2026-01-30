@@ -32,11 +32,11 @@ export default function UpdateProfileInformation({
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">
+                <h2 className="text-lg font-medium text-gray-300">
                     Profile Information
                 </h2>
 
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-300">
                     Update your account's profile information and email address.
                 </p>
             </header>
@@ -47,7 +47,7 @@ export default function UpdateProfileInformation({
 
                     <TextInput
                         id="name"
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full border-indigo-500 bg-neutral-900 text-white focus:border-indigo-500 focus:ring-indigo-300"
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
                         required
@@ -64,7 +64,7 @@ export default function UpdateProfileInformation({
                     <TextInput
                         id="email"
                         type="email"
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full border-indigo-500 bg-neutral-900 text-white focus:border-indigo-500 focus:ring-indigo-300"
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
                         required

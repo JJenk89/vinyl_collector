@@ -3,6 +3,7 @@ import { Link, usePage } from '@inertiajs/react';
 import Header from '@/Layouts/Header';
 import axios from 'axios';
 import useSpotifyToken from '@/Hooks/useSpotifyToken';
+import Footer from '@/Components/Footer';
 
 interface SpotifyItem {
     id: string;
@@ -90,8 +91,8 @@ function Search() {
 
     return (
         <div className="text-gray-300 bg-neutral-950 height-full min-h-screen">
-                <div className="p-4 text-center">
-                    <h1 className='text-4xl font-black'>Search For An Album</h1>
+                <div className="p-4 text-center pt-20">
+                    <h1 className='text-5xl font-black font-header'>Album Finder</h1>
                 </div>
             
             
@@ -152,7 +153,7 @@ function Search() {
                                 {item.images && item.images.length > 0 && (
                                     <Link href={`/album/${item.id}`}><img src={item.images[0].url} alt={item.name} className="w-full h-auto" /></Link>
                                 )}
-                                <p>{item.type}</p>
+                                <p className='font-mono'>{item.type}</p>
                             </div>
                         ))}
                     </div>
@@ -160,7 +161,7 @@ function Search() {
             
             
                 
-            
+            <Footer />
         </div>
     );
 }

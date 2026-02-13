@@ -4,6 +4,7 @@ import Header from '@/Layouts/Header';
 import SortSelect from '@/Components/SortList';
 import PrimaryButton from '@/Components/PrimaryButton';
 import DeleteButton from '@/Components/DeleteButton';
+import Footer from '@/Components/Footer';
 
 type Album = {
     album_id: number;
@@ -108,8 +109,8 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
     return (
         <div>
             <Head title="My Wishlist" />
-            <div className="container mx-auto p-6 bg-neutral-950 text-gray-300 min-h-screen pt-20">
-                <h1 className="text-3xl font-bold mb-6">My Wishlist</h1>
+            <div className="container mx-auto p-6 bg-neutral-950 text-gray-300 min-h-screen pt-20 min-w-full">
+                <h1 className="text-3xl font-bold mb-6 font-header">My Wishlist</h1>
 
                 
                 {!auth.user ? (
@@ -174,7 +175,7 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
                     </>
                 )}
 
-                
+                <Footer />
             </div>
         </div>
     );

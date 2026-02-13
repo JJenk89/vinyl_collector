@@ -48,6 +48,14 @@ export default function Authenticated({
                             >
                                 Log Out
                             </Link>
+                            <Link
+                                className="border border-green-700 ml-4 px-3 py-1 rounded text-gray-300 hover:bg-red-500 hover:text-white transition"
+                                
+                                href={'/'}
+                                as="button"
+                            >
+                                Home
+                            </Link>
                         </div>
                     </div>
 

@@ -25,7 +25,7 @@ export default function Dashboard() {
                             You're logged in!
                         </div>
                    
-                    <Link href='/' className='underline text-gray-300 mx-auto px-4'>Home</Link>
+                  
                 </div>
             </div>
         </AuthenticatedLayout>

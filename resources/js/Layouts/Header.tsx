@@ -1,5 +1,4 @@
 import { Link, usePage } from '@inertiajs/react';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { useState, ReactNode } from 'react';
 import { useEffect } from 'react';
 
@@ -18,8 +17,12 @@ const Header = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
+            document.querySelector('.slider')?.classList.add('hidden');
+            document.querySelector('.cancel')?.classList.remove('hidden');
         } else {
             document.body.style.overflow = 'auto';
+            document.querySelector('.slider')?.classList.remove('hidden');
+            document.querySelector('.cancel')?.classList.add('hidden');
         }
 
         return () => {
@@ -31,7 +34,7 @@ const Header = ({ children }: { children: ReactNode }) => {
         <>
             <header className='bg-neutral-950 flex justify-between items-center p-4 fixed top-0 left-0 right-0 z-50 border-b-purple-950 border-b-2'>
                 <Link onClick={() => setIsOpen(false)} href="/" className="text-4xl font-display text-purple-950 mx-3">
-                    My Vinyl
+                    <img src="/assets/Logo.svg" alt="My Vinyl" width={150} height={100}/>
                 </Link>
 
                 {/* Desktop Navigation */}
@@ -51,15 +54,14 @@ const Header = ({ children }: { children: ReactNode }) => {
 
                 {/* Mobile Menu Toggle Button */}
                 <button onClick={() => setIsOpen(!isOpen)} className="block md:hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-7 text-gray-300">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                    </svg>
+                    <img src="/assets/Slider.svg" alt="menu button" width={40} height={40} className='slider'/>
+                    <img src="/assets/Cancel.svg" alt="menu button" width={40} height={40} className='cancel hidden'/>
                 </button>
             </header>
 
             {/* Mobile Navigation Menu */}
             {isOpen && (
-                <nav className="fixed top-16 left-0 right-0 bottom-0 bg-black flex flex-col items-center space-y-6 z-40 overflow-y-auto">
+                <nav className="fixed top-16 left-0 right-0 bottom-0 bg-black flex flex-col items-center space-y-6 z-40 pt-10 overflow-y-auto text-xl font-mono">
 
                     <Link onClick={() => setIsOpen(false)} href="/" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 mt-4 ${url === '/' ? "bg-purple-900 p-0.5 rounded" : "bg-black"}`}>
                         Home

@@ -32,9 +32,9 @@ const Header = ({ children }: { children: ReactNode }) => {
 
     return (
         <>
-            <header className='bg-neutral-950 flex justify-between items-center p-4 fixed top-0 left-0 right-0 z-50 border-b-purple-950 border-b-2'>
+            <header className='bg-neutral-950 flex justify-between items-center p-4 fixed top-0 left-0 right-0 z-50 font-mono'>
                 <Link onClick={() => setIsOpen(false)} href="/" className="text-4xl font-display text-purple-950 mx-3">
-                    <img src="/assets/Logo.svg" alt="My Vinyl" width={150} height={100}/>
+                    <img src="/assets/LogoMonoton.svg" alt="My Vinyl" width={150} height={100}/>
                 </Link>
 
                 {/* Desktop Navigation */}
@@ -48,7 +48,7 @@ const Header = ({ children }: { children: ReactNode }) => {
                     <Link href="/wishlist" className={`text-1xl text-gray-200 mx-3 hover:underline rounded  ${url === '/wishlist' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
                         View Wishlist
                     </Link>
-                    {auth.user ? <Link onClick={() => setIsOpen(false)} href="/dashboard" className={`text-1xl text-gray-200 hover:underline rounded p-2 ${url === '/dashboard' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
+                    {auth.user ? <Link onClick={() => setIsOpen(false)} href="/dashboard" className={`text-1xl text-gray-200 mx-3 hover:underline rounded ${url === '/dashboard' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
                         My Account</Link> : null}
                 </nav>
 
@@ -61,7 +61,7 @@ const Header = ({ children }: { children: ReactNode }) => {
 
             {/* Mobile Navigation Menu */}
             {isOpen && (
-                <nav className="fixed top-16 left-0 right-0 bottom-0 bg-black flex flex-col items-center space-y-6 z-40 pt-10 overflow-y-auto text-xl font-mono">
+                <nav className="fixed top-16 left-0 right-0 bottom-0 bg-black flex flex-col items-center space-y-10 z-40 pt-20 overflow-y-auto text-xl font-mono ">
 
                     <Link onClick={() => setIsOpen(false)} href="/" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 mt-4 ${url === '/' ? "bg-purple-900 p-0.5 rounded" : "bg-black"}`}>
                         Home

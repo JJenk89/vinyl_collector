@@ -4,7 +4,7 @@ import SecondaryButton from "./SecondaryButton";
 
 const AuthComponent = () => {
     return ( 
-        <div>
+        <div className="font-mono">
             <p className="m-4">Sign up to get started!</p>
 
             <PrimaryButton className="w-24">

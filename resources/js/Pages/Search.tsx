@@ -4,6 +4,7 @@ import Header from '@/Layouts/Header';
 import axios from 'axios';
 import useSpotifyToken from '@/Hooks/useSpotifyToken';
 import Footer from '@/Components/Footer';
+import Spinner from '@/Components/Spinner';
 
 interface SpotifyItem {
     id: string;
@@ -20,6 +21,7 @@ interface User {
 
 function Search() {
     const [search, setSearch] = useState('');
+    const [isSearching, setIsSearching] = useState(false);
     const [results, setResults] = useState<SpotifyItem[]>([]);
     const { token, loading, error } = useSpotifyToken();
 
@@ -56,6 +58,8 @@ function Search() {
         return;
         }
 
+        setIsSearching(true);
+
         axios.get('/api/spotify/search', {
                 params: {
                 query: search.trim(),
@@ -70,6 +74,7 @@ function Search() {
             const artistResults = data.artists?.items || [];
     
         setResults([...albumResults, ...artistResults]);
+        setIsSearching(false);
         })
         .catch(error => {
             console.error("Full error object:", error);
@@ -89,22 +94,25 @@ function Search() {
         }
     };
 
+   
+
     return (
         <div className="text-gray-300 bg-neutral-950 height-full min-h-screen">
                 <div className="p-4 text-center pt-20">
-                    <h1 className='text-5xl font-black font-header'>Album Finder</h1>
+                    <h1 className='text-5xl  font-header'>Album Finder</h1>
+                     
                 </div>
             
             
             
                 <>
-                    <div className=" p-2 m-2">
+                    <div className=" font-mono p-2 m-2 max-w-lg md:mx-auto">
                 <form role="search" onSubmit={(e) => {
                     e.preventDefault();
                     searchSpotify();
                     }}>
 
-                    <label htmlFor="searchbar" className="block mb-2">
+                    <label htmlFor="searchbar" className="block mb-2 text-lg">
                         Search for an album
                     </label>
                         <div className="flex">
@@ -128,14 +136,11 @@ function Search() {
                             </button>
                         </div>
                     </form>
+                    {loading && <Spinner />}
+                    {isSearching && <Spinner />}
                 </div>
                 </>
-            
-            
-            
 
-            
-            
             {/* SEARCH RESULTS */}
 
             
@@ -144,9 +149,9 @@ function Search() {
 
            
                 <>
-                    {results.length > 0 && <h2 className="p-4 text-2xl">Search Results</h2>}
+                    {results.length > 0 && <h2 className="p-4 text-2xl font-mono text-center pt-16">Search Results</h2>}
 
-                    <div className="grid grid-cols-2 grid-rows-4 gap-4 p-4">
+                    <div className="grid grid-cols-2 grid-rows-4 gap-4 md:grid-cols-3 lg:grid-cols-5 p-4 min-h-screen">
                         {results.map((item, index) => (
                             <div key={index} className="p-4 border-2 border-indigo-800 rounded">
                                 <h3 className="text-l font-bold pb-2">{item.name}</h3>

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import Header from '@/Layouts/Header';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 import { Link } from '@inertiajs/react';
 
 type AlbumProps = {
@@ -38,16 +38,12 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
     };
 
     const handleAddtoCollection = () => {
-        Inertia.post('/collection', { album: JSON.stringify(album) });
 
-        if (isInWishlist) {
-            Inertia.delete('/wishlist/remove', { data: { album_id: album.id } });
-            Inertia.visit('/collection');
-        }
+        router.post('/collection', { album: JSON.stringify(album), removeFromWishlist: isInWishlist})
     };
 
     const handleAddtoWishlist = () => {
-        Inertia.post('/wishlist', { album: JSON.stringify(album) });
+        router.post('/wishlist', { album: JSON.stringify(album) });
     };
 
     const getReleaseYear = (releaseDate: string) => {
@@ -55,21 +51,25 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
     }
 
     return (
-        <div className='bg-neutral-950'> {/* Container div - style later */}
+        <div className='bg-neutral-950 font-mono'> {/* Container div - style later */}
 
-        <nav className='pt-20 pb-10'><Link href="/collection" className="underline m-4 text-gray-300">Back to Collection</Link></nav>
+        <nav className='pt-20 pb-10 text-center'>
+            <Link href="/" className="underline m-4 text-gray-300">Home</Link>
+            <Link href="/collection" className="underline m-4 text-gray-300">My Collection</Link>
+            <Link href="/wishlist" className="underline m-4 text-gray-300">My Wishlist</Link>
+        </nav>
 
             <div className="p-4 text-center">
-                <h1 className="text-4xl font-black text-gray-300">{album.name}</h1>
+                <h1 className="text-4xl font-black text-gray-300 font-mono">{album.name}</h1>
             </div>
 
              <div className="p-2 text-gray-300">
                 <div className="flex justify-evenly p-4 gap-4">
                     <button 
-                        className={`p-3 rounded w-full max-w-xs transition-colors ${
+                        className={`p-3 rounded w-full max-w-48 transition-colors ${
                             isInCollection 
                                 ? 'bg-green-200 cursor-not-allowed border-2 bg-opacity-60 border-green-300 text-gray-100' 
-                                : 'bg-indigo-600 hover:bg-blue-700 text-white'
+                                : 'bg-green-600 hover:bg-green-700 text-white'
                         }`}
                         onClick={handleAddtoCollection}
                         disabled={isInCollection}
@@ -80,10 +80,10 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
                     {/* Conditionally render wishlist button */}
                     {shouldShowWishlistButton && (
                         <button 
-                            className={`p-3 rounded w-full max-w-xs transition-colors ${
+                            className={`p-3 rounded w-full max-w-48 transition-colors ${
                                 isInWishlist 
                                     ? 'bg-green-200 cursor-not-allowed border-2 bg-opacity-60 border-green-300 text-gray-100' 
-                                    : 'bg-blue-600 hover:bg-blue-700 text-white'
+                                    : 'bg-yellow-600 hover:bg-yellow-700 text-white'
                             }`}
                             onClick={handleAddtoWishlist}
                             disabled={isInWishlist}
@@ -95,16 +95,21 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
                    
                 </div>
 
-                <img src={album.images[0].url} alt={album.name} className="w-64 h-64 mx-auto p-4 shadow-sm shadow-purple-500" />
+                <img src={album.images[0].url} alt={album.name} className="w-64 h-64 md:w-80 md:h-80 mx-auto p-4 mt-8 mb-8 shadow-sm shadow-yellow-800" />
 
-                <h2 className="text-2xl font-bold mt-4">by {album.artists[0].name}</h2>
-                <span>Release Year: {getReleaseYear(album.release_date)}</span>
+                <div className='text-center'>
+                    <h2 className="text-3xl font-bold mt-4 mb-4 ">by <span className="text-yellow-800">{album.artists[0].name}</span></h2>
 
-                <ul className="mt-4">
+                    <span className="italic">
+                        Release Year: <span className="text-yellow-800">{getReleaseYear(album.release_date)}</span>
+                    </span>
+                </div>
+
+                <ul className="mt-4 border border-3 border-yellow-800 rounded p-4 max-w-2xl mx-auto">
                     {album.tracks.items.map((track) => (
                         <li key={track.track_number} className="flex justify-between mt-2">
-                            <span>{track.track_number}. {track.name}</span>
-                            <span>{formatDuration(track.duration_ms)}</span>
+                            <span className="">{track.track_number}. {track.name}</span>
+                            <span className="p-1">{formatDuration(track.duration_ms)}</span>
                         </li>
                     ))}
                 </ul>

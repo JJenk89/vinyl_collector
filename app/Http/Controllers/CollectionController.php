@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Application;
 use App\Models\Collection;
+use App\Models\Wishlist;
 
 class CollectionController extends Controller
 {
@@ -24,6 +25,14 @@ class CollectionController extends Controller
             'name' => $albumData['name'],
             'artist' => $albumData['artists'][0]['name']
         ]);
+
+        if ($request->boolean('removeFromWishlist')) {
+            // Remove from wishlist if user adds it to collection
+            Wishlist::where([
+                'album_id' => $albumData['id'],
+                'user_id' => Auth::id()
+            ])->delete();
+        }
 
         return redirect()->route('collection');
     }
@@ -49,7 +58,6 @@ class CollectionController extends Controller
 
     public function removeFromCollection(Request $request)
     {
-        $albumData = json_decode($request->input('album'), true);
 
         $validated = $request->validate([
             'album_id' => 'required',

@@ -110,16 +110,16 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
         <div>
             <Head title="My Wishlist" />
             <div className="container mx-auto p-6 bg-neutral-950 text-gray-300 min-h-screen pt-20 min-w-full">
-                <h1 className="text-3xl font-bold mb-6 font-header">My Wishlist</h1>
+                <h1 className="text-5xl  mb-12 font-header md:text-center">My Wishlist</h1>
 
                 
                 {!auth.user ? (
-                    <p>Please <Link href='/register' className='underline text-indigo-600'>create an account</Link> or <Link href='/login' className='underline text-indigo-600'>log in</Link> to create a record wishlist!
+                    <p className='font-mono min-h-screen'>Please <Link href='/register' className='underline text-indigo-600'>create an account</Link> or <Link href='/login' className='underline text-indigo-600'>log in</Link> to create a record wishlist!
                     </p>
                 ) : (
                     <>
-                        <div className="mb-8">
-                    <h4 className="text-1xl font-semibold">Sort Wishlist</h4>
+                    <div className="mb-8 font-mono max-w-lg text-center mx-auto">
+                    <h4 className="text-2xl font-semibold mb-4">Sort Wishlist</h4>
 
                     <p className="py-2">By default your list will be sorted by the date you added the album to it</p>
 
@@ -141,9 +141,9 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
                 </div>
                 
                     {filteredAndSortedItems.length === 0 ? (
-                        <p>Your wishlist is empty</p>
+                        <p className='font-mono text-red-600'>Your wishlist is empty</p>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-neutral-950">
+                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 bg-neutral-950">
                             {filteredAndSortedItems.map((album) => (
                                 <div 
                                 key={album.album_id} 
@@ -152,7 +152,7 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
                                 <h2 className="text-xl font-semibold">{album.name}</h2>
                                 <p className="text-gray-500 mt-2 mb-2">{album.artist}</p>
                             
-                                <div className="flex justify-between">
+                                <div className="flex justify-between gap-4">
                             
                                 <PrimaryButton>
                                     <Link 

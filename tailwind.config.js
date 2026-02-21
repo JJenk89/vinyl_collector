@@ -14,7 +14,8 @@ export default {
         extend: {
             fontFamily: {
                 sans: ["Open Sans", ...defaultTheme.fontFamily.sans],
-                header: ["Vujahday Script", "cursive"],
+                header: ["yesteryear", "cursive"],
+                logo: ["monoton", "sans-serif"],
             },
         },
     },

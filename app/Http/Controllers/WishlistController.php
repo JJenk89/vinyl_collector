@@ -49,7 +49,6 @@ class WishlistController extends Controller
 
     public function removeFromWishlist(Request $request)
     {
-        $albumData = json_decode($request->input('album'), true);
 
         $validated = $request->validate([
             'album_id' => 'required',

@@ -32,7 +32,7 @@ export default function Login({
         <GuestLayout>
             <Head title="Log in" />
 
-            <h1 className="text-2xl font-bold text-gray-300 mt-4 mb-4 pb-8">Log In</h1>
+            <h1 className="text-4xl font-bold font-mono text-gray-300 mt-4 mb-4 pb-8">Log In</h1>
 
             {status && (
                 <div className="mb-4 text-sm font-medium text-green-600">
@@ -99,7 +99,7 @@ export default function Login({
                         </Link>
                     )}
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    <PrimaryButton className="ms-4 font-mono" disabled={processing}>
                         Log in
                     </PrimaryButton>
                 </div>

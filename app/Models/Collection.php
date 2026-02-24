@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Collection extends Model
 {
-    protected $fillable = ['album_id', 'name', 'artist', 'user_id'];
+    protected $fillable = ['album_id', 'name', 'artist', 'user_id', 'cover_url'];
 
     //get the user that owns the collection item
     public function user(): BelongsTo

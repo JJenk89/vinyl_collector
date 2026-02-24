@@ -18,12 +18,23 @@ class CollectionController extends Controller
     {
         $albumData = json_decode($request->input('album'), true);
 
+        // Show error if album is already in collection
+        $existingCollectionItem = Collection::where([
+            'album_id' => $albumData['id'],
+            'user_id' => Auth::id()
+        ])->exists();
+
+        if ($existingCollectionItem) {
+            return back()->withErrors(['collection' => 'Album is already in your collection!']);
+        }
+
         // Create or find existing collection entry
         Collection::create([
             'user_id' => Auth::id(),
             'album_id' => $albumData['id'],
             'name' => $albumData['name'],
-            'artist' => $albumData['artists'][0]['name']
+            'artist' => $albumData['artists'][0]['name'],
+            'cover_url' => $albumData['images'][0]['url'] ?? null,
         ]);
 
         if ($request->boolean('removeFromWishlist')) {
@@ -34,7 +45,7 @@ class CollectionController extends Controller
             ])->delete();
         }
 
-        return redirect()->route('collection');
+        return back();
     }
 
     public function index()
@@ -71,6 +82,6 @@ class CollectionController extends Controller
 
 
 
-        return redirect()->back();
+        return back();
     }
 }

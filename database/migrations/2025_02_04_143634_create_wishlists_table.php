@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('album_id', 255);
             $table->string('name');
             $table->string('artist');
+            $table->string('cover_url')->nullable();
             $table->timestamps();
 
             $table->unique(['user_id', 'album_id']);

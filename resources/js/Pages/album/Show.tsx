@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 import Header from '@/Layouts/Header';
-import { router } from '@inertiajs/react';
-import { Link } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
+import MiniNav from '@/Components/MiniNav';
+import AuthPrompt from '@/Components/AuthPrompt';
 
 type AlbumProps = {
     album: {
@@ -27,8 +28,15 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
     // Check if album is in user's wishlist or collection
     const isInWishlist = userWishlistIds.includes(album.id);
     const isInCollection = userCollectionIds.includes(album.id);
-
     const shouldShowWishlistButton = !isInCollection;
+
+    const { auth } = usePage().props as {
+        auth: {
+            user: {
+                name: string;
+            } | null;
+        };
+    };
 
 
     const formatDuration = (ms: number) => {
@@ -53,11 +61,7 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
     return (
         <div className='bg-neutral-950 font-mono'> {/* Container div - style later */}
 
-        <nav className='pt-20 pb-10 text-center'>
-            <Link href="/" className="underline m-4 text-gray-300">Home</Link>
-            <Link href="/collection" className="underline m-4 text-gray-300">My Collection</Link>
-            <Link href="/wishlist" className="underline m-4 text-gray-300">My Wishlist</Link>
-        </nav>
+        <MiniNav />
 
             <div className="p-4 text-center">
                 <h1 className="text-4xl font-black text-gray-300 font-mono">{album.name}</h1>
@@ -65,24 +69,30 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
 
              <div className="p-2 text-gray-300">
                 <div className="flex justify-evenly p-4 gap-4">
-                    <button 
-                        className={`p-3 rounded w-full max-w-48 transition-colors ${
+
+                    {!auth.user ? (
+                            <AuthPrompt />
+                        ) : (
+                        <>
+                        <button 
+                            className={`p-3 rounded w-full max-w-48 transition-colors ${
                             isInCollection 
                                 ? 'bg-green-200 cursor-not-allowed border-2 bg-opacity-60 border-green-300 text-gray-100' 
                                 : 'bg-green-600 hover:bg-green-700 text-white'
-                        }`}
-                        onClick={handleAddtoCollection}
-                        disabled={isInCollection}
-                    >
-                        {isInCollection ? 'In Your Collection!' : 'Add to Collection'}
-                    </button>
+                            }`}
+                            onClick={handleAddtoCollection}
+                            disabled={isInCollection}
+                        >
+                            {isInCollection ? 'In Your Collection!' : 'Add to Collection'}
+                        </button>
 
-                    {/* Conditionally render wishlist button */}
+                        {/* Conditionally render wishlist button */}
+
                     {shouldShowWishlistButton && (
                         <button 
                             className={`p-3 rounded w-full max-w-48 transition-colors ${
                                 isInWishlist 
-                                    ? 'bg-green-200 cursor-not-allowed border-2 bg-opacity-60 border-green-300 text-gray-100' 
+                                    ? 'bg-yellow-200 cursor-not-allowed border-2 bg-opacity-60 border-yellow-300 text-gray-100' 
                                     : 'bg-yellow-600 hover:bg-yellow-700 text-white'
                             }`}
                             onClick={handleAddtoWishlist}
@@ -91,8 +101,7 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
                             {isInWishlist ? 'In Your Wishlist!' : 'Add to Wishlist'}
                         </button>
                     )}
-                    
-                   
+                        </>)} 
                 </div>
 
                 <img src={album.images[0].url} alt={album.name} className="w-64 h-64 md:w-80 md:h-80 mx-auto p-4 mt-8 mb-8 shadow-sm shadow-yellow-800" />

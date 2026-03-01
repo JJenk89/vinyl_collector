@@ -35,9 +35,9 @@ return [
         ],
     ],
 
-    'spotify' => [
-        'client_id' => env('SPOTIFY_CLIENT_ID'),
-        'client_secret' => env('SPOTIFY_CLIENT_SECRET'),
+    'discogs' => [
+        'consumer_key' => env('DISCOGS_CONSUMER_KEY'),
+        'consumer_secret' => env('DISCOGS_CONSUMER_SECRET'),
     ],
 
 ];

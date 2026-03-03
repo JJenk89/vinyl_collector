@@ -4,7 +4,8 @@ import DeleteButton from './DeleteButton';
 
 export type Album = {
     album_id: number;
-    name: string;
+    title: string;
+    label: string | null;
     artist: string;
     cover_url: string;
 };
@@ -37,7 +38,7 @@ const AlbumCard = ({
             >
                 <p>
                     Are you sure you want to delete{' '}
-                    <span className="font-bold">{album.name}</span>{' '}
+                    <span className="font-bold">{album.title}</span>{' '}
                     from your {context}?
                 </p>
                 <div className="flex justify-end gap-4 mt-4">
@@ -51,14 +52,16 @@ const AlbumCard = ({
             </dialog>
 
             <div className="text-center flex flex-col content-center items-center mb-4">
-                <h2 className="text-xl font-semibold">{album.name}</h2>
+                <h2 className="text-xl font-semibold">{album.title}</h2>
                 <p className="text-gray-500 mt-2 mb-2">{album.artist}</p>
                 <img
                     src={album.cover_url}
-                    alt={`${album.name} cover`}
+                    alt={`${album.title} cover`}
                     className="w-min h-48 object-contain border border-yellow-700 rounded-md mb-2 p-1"
                 />
             </div>
+
+            <p className="text-gray-500 text-sm pb-2">{album.label}</p>
 
             <div className="flex justify-between gap-4">
                 <PrimaryButton>

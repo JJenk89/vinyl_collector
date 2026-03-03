@@ -30,9 +30,10 @@ class WishlistController extends Controller
         Wishlist::create([
             'user_id' => Auth::id(),
             'album_id' => $albumData['id'],
-            'name' => $albumData['name'],
-            'artist' => $albumData['artists'][0]['name'],
-            'cover_url' => $albumData['images'][0]['url'] ?? null
+            'title' => $albumData['title'],
+            'artist' => $albumData['artists'][0]['name'] ?? $albumData['artist'] ?? 'Unknown Artist',
+            'label' => $albumData['label'][0] ?? $albumData['label'] ?? null,
+            'cover_url' => $albumData['images'][0]['resource_url'] ?? $albumData['cover_image'] ?? $albumData['thumb'] ?? null,
         ]);
 
 

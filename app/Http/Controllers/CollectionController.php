@@ -32,9 +32,10 @@ class CollectionController extends Controller
         Collection::create([
             'user_id' => Auth::id(),
             'album_id' => $albumData['id'],
-            'name' => $albumData['name'],
-            'artist' => $albumData['artists'][0]['name'],
-            'cover_url' => $albumData['images'][0]['url'] ?? null,
+            'title' => $albumData['title'],
+            'label' => $albumData['label'][0] ?? $albumData['label'] ?? null,
+            'artist' => $albumData['artists'][0]['name'] ?? $albumData['artist'] ?? 'Unknown Artist',
+            'cover_url' => $albumData['images'][0]['resource_url'] ?? $albumData['cover_image'] ?? $albumData['thumb'] ?? null,
         ]);
 
         if ($request->boolean('removeFromWishlist')) {

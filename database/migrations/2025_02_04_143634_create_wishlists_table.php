@@ -19,7 +19,8 @@ return new class extends Migration
                 ->onDelete('cascade');
 
             $table->string('album_id', 255);
-            $table->string('name');
+            $table->string('title');
+            $table->string('label')->nullable();
             $table->string('artist');
             $table->string('cover_url')->nullable();
             $table->timestamps();

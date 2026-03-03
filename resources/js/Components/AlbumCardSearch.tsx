@@ -2,25 +2,17 @@ import { Link } from '@inertiajs/react';
 import PrimaryButton from './PrimaryButton';
 import AuthPrompt from './AuthPrompt';
 import { AuthProp } from '@/types/user';
-
-export type DiscogsItem = {
-    id: string;
-    title: string;
-    cover_image: string;
-    type: string;
-    year?: string;
-    country?: string;
-}
+import { DiscogsArtist, DiscogsRelease, DiscogsTrack } from '@/types/discogApiTypes';
 
 type AlbumCardSearchProps = {
-    item: DiscogsItem;
+    item: DiscogsRelease;
     auth: AuthProp;
     addToWishlist: { [key: string]: boolean };
     addToCollection: { [key: string]: boolean };
     wishlistErrors: { [key: string]: string };
     collectionErrors: { [key: string]: string };
-    handleAddToWishList: (item: DiscogsItem) => void;
-    handleAddToCollection: (item: DiscogsItem) => void;
+    handleAddToWishList: (item: DiscogsRelease) => void;
+    handleAddToCollection: (item: DiscogsRelease) => void;
 };
 
 const AlbumCardSearch = ({
@@ -37,7 +29,7 @@ const AlbumCardSearch = ({
         <div className="p-4 border-2 border-indigo-800 rounded">
             <h3 className="text-lg font-bold pb-2">{item.title}</h3>
 
-            {item.cover_image && (
+            {item.cover_image ? (
                 <Link href={`/album/${item.id}`}>
                     <img
                         src={item.cover_image}
@@ -45,9 +37,13 @@ const AlbumCardSearch = ({
                         className="w-full h-auto border border-yellow-700 p-1 rounded-md"
                     />
                 </Link>
-            )}
+            ) : <Link href={`/album/${item.id}`}>
+                    <p className="text-gray-300">No Cover Image Available</p>
+                </Link>}
 
-            <p className="font-mono pt-4 text-lg">{item.type}</p>
+            <p className="font-mono pt-4 text-lg">{item.format?.join(', ')}</p>
+            <p className="font-mono pt-4 text-lg">{item.styles?.join(', ')}</p>
+            <p className="font-mono pt-4 text-md">{item.label?.[0] || 'No label information available'}</p>
 
             {item.year && (
                 <p className="font-mono text-sm text-gray-400">{item.country} · {item.year}</p>

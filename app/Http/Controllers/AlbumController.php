@@ -14,15 +14,14 @@ class AlbumController extends Controller
 {
     public function show($id)
     {
-        $tokenResponse = Http::asForm()->post('https://accounts.spotify.com/api/token', [
-            'grant_type' => 'client_credentials',
-            'client_id' => env('SPOTIFY_CLIENT_ID'),
-            'client_secret' => env('SPOTIFY_CLIENT_SECRET'),
+
+        $albumResponse = Http::withHeaders([
+            'User-Agent' => config('app.name') . '/1.0',
+        ])->get("https://api.discogs.com/releases/{$id}", [
+            'key' => config('services.discogs.consumer_key'),
+            'secret' => config('services.discogs.consumer_secret'),
         ]);
 
-        $token = $tokenResponse->json()['access_token'];
-
-        $albumResponse = Http::withToken($token)->get("https://api.spotify.com/v1/albums/{$id}");
         $album = $albumResponse->json();
 
         // Get user's existing wishlist and collection album IDs

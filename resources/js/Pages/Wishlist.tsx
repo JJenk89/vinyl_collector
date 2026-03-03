@@ -78,7 +78,7 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
         if (filter.trim() !== '') {
             const searchTerm = filter.toLowerCase();
             items = items.filter((album) =>
-                album.name.toLowerCase().includes(searchTerm) ||
+                album.title.toLowerCase().includes(searchTerm) ||
                 album.artist.toLowerCase().includes(searchTerm)
             );
         }
@@ -87,11 +87,11 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
         if (sortOption) {
             switch(sortOption) {
                 case "albumAsc":
-                    items = items.sort((a, b) => a.name.localeCompare(b.name));
+                    items = items.sort((a, b) => a.title.localeCompare(b.title));
                     break;
                 
                 case "albumDesc":
-                    items = items.sort((a, b) => b.name.localeCompare(a.name));
+                    items = items.sort((a, b) => b.title.localeCompare(a.title));
                     break;
 
                 case "artistAsc":

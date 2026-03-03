@@ -6,15 +6,16 @@ import { searchDiscogs } from '@/API';
 // Component imports
 import Footer from '@/Components/Footer';
 import Spinner from '@/Components/Spinner';
-import AlbumCardSearch, { DiscogsItem } from '@/Components/AlbumCardSearch';
+import AlbumCardSearch from '@/Components/AlbumCardSearch';
+import { DiscogsRelease, DiscogsArtist, DiscogsTrack } from '@/types/discogApiTypes';
 
 // Types
 import { User } from '@/types/user';
 
 interface PageProps {
     errors: Record<string, string>;
-    userWishlistIds: string[];
-    userCollectionIds: string[];
+    userWishlistIds: any[];
+    userCollectionIds: any[];
     [key: string]: unknown;
     auth: {
         user: User;
@@ -24,7 +25,7 @@ interface PageProps {
 function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
     const [search, setSearch] = useRemember('', 'search');
     const [isSearching, setIsSearching] = useState(false);
-    const [results, setResults] = useRemember<DiscogsItem[]>([], 'results');
+    const [results, setResults] = useRemember<DiscogsRelease[]>([], 'results');
     const [addToWishlist, setAddToWishlist] = useState<Record<string, boolean>>(
         () => Object.fromEntries(userWishlistIds.map(id => [id, true]))
     );
@@ -32,9 +33,9 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
         () => Object.fromEntries(userCollectionIds.map(id => [id, true]))
     );
     const [wishlistErrors, setWishlistErrors] = useState<Record<string, string>>({});
-    const [pendingWishlistId, setPendingWishlistId] = useState<string | null>(null);
+    const [pendingWishlistId, setPendingWishlistId] = useState<string | number | null>(null);
     const [collectionErrors, setCollectionErrors] = useState<Record<string, string>>({});
-    const [pendingCollectionId, setPendingCollectionId] = useState<string | null>(null);
+    const [pendingCollectionId, setPendingCollectionId] = useState<string | number | null>(null);
     const [searchError, setSearchError] = useState<string | null>(null);
 
     const { errors } = usePage<PageProps>().props;
@@ -82,7 +83,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
         if (e.key === 'Enter') searchDiscogsFn();
     };
 
-    const handleAddToWishList = (item: DiscogsItem) => {
+    const handleAddToWishList = (item: DiscogsRelease) => {
         setWishlistErrors(prev => { const next = { ...prev }; delete next[item.id]; return next; });
         setPendingWishlistId(item.id);
 
@@ -93,7 +94,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
         });
     };
 
-    const handleAddToCollection = (item: DiscogsItem) => {
+    const handleAddToCollection = (item: DiscogsRelease) => {
         const isInWishlist = userWishlistIds.includes(item.id);
         setCollectionErrors(prev => { const next = { ...prev }; delete next[item.id]; return next; });
         setPendingCollectionId(item.id);

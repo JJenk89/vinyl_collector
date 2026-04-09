@@ -10,7 +10,7 @@ export type Album = {
     cover_url: string;
 };
 
-type AlbumCardProps = {
+export type AlbumCardProps = {
     album: Album;
     dialogAlbumId: number | null;
     context: 'wishlist' | 'collection';
@@ -28,7 +28,8 @@ const AlbumCard = ({
     onDelete
 }: AlbumCardProps) => {
     return ( 
-        <div className="bg-neutral-950 shadow-md rounded-lg p-4 border border-indigo-700">
+        <div className="bg-neutral-950 shadow-md rounded-lg p-4 border border-indigo-700 max-h-full
+         flex flex-col justify-between">
 
             <dialog
                 className="bg-neutral-950 border-2 border-red-600 rounded-md p-6 text-gray-300 z-50 backdrop:bg-gray-900 backdrop:opacity-70"
@@ -61,7 +62,7 @@ const AlbumCard = ({
                 />
             </div>
 
-            <p className="text-gray-500 text-sm pb-2">{album.label}</p>
+            <p className="text-gray-500 text-sm pb-2">{album.label || 'Label not available'}</p>
 
             <div className="flex justify-between gap-4">
                 <PrimaryButton>

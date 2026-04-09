@@ -26,7 +26,7 @@ const AlbumCardSearch = ({
     handleAddToCollection,
 }: AlbumCardSearchProps) => {
     return (
-        <div className="p-4 border-2 border-indigo-800 rounded">
+        <div className="p-4 border-2 border-indigo-700 rounded max-h-full flex flex-col justify-between">
             <h3 className="text-lg font-bold pb-2">{item.title}</h3>
 
             {item.cover_image ? (

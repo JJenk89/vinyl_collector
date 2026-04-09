@@ -9,6 +9,8 @@ import MiniNav from '@/Components/MiniNav';
 import AuthPromptPage from '@/Components/AuthPromptPage';
 import SearchBar from '@/Components/SearchBar';
 import AlbumCard, { Album } from '@/Components/AlbumCard';
+import AlbumListItem from '@/Components/AlbumListItem';
+import ViewToggle, { ViewToggleProps } from '@/Components/ViewToggle';
 
 type CollectionProps = {
     collections: Album[];
@@ -19,10 +21,19 @@ const Collection = ({ collections }: CollectionProps) => {
     const [sortOption, setSortOption] = useState<string>('');
     const [filter, setFilter] = useState<string>('');
     const [dialogAlbumId, setDialogAlbumId] = useState<number | null>(null);
+    const [view, setView] = useState<"card" |"list">(() => {
+        const savedView = localStorage.getItem('collectionView');
+        return (savedView === 'card' || savedView === 'list') ? savedView : 'card';
+    });
 
     useEffect(() => {
         setCollectionItems(collections);
     }, [collections]);
+
+    const handleViewToggle = (newView: "card" | "list") => {
+        setView(newView);
+        localStorage.setItem('collectionView', newView);
+    };
 
     const sortOptions = [
         { value: 'albumAsc', label: 'Album Name (A to Z)' },
@@ -70,27 +81,24 @@ const Collection = ({ collections }: CollectionProps) => {
 
     // Use useMemo to compute filtered and sorted items without modifying state
     const filteredAndSortedItems = useMemo(() => {
-        // Start with the complete collectionItems
         let items = [...collectionItems];
 
-        // Apply filter if it exists
         if (filter.trim() !== '') {
             const searchTerm = filter.toLowerCase();
             items = items.filter((album) =>
-                album.name.toLowerCase().includes(searchTerm) ||
+                album.title.toLowerCase().includes(searchTerm) ||
                 album.artist.toLowerCase().includes(searchTerm)
             );
         }
 
-        // Apply sort if selected
         if (sortOption) {
             switch(sortOption) {
                 case "albumAsc":
-                    items = items.sort((a, b) => a.name.localeCompare(b.name));
+                    items = items.sort((a, b) => a.title.localeCompare(b.title));
                     break;
                 
                 case "albumDesc":
-                    items = items.sort((a, b) => b.name.localeCompare(a.name));
+                    items = items.sort((a, b) => b.title.localeCompare(a.title));
                     break;
 
                 case "artistAsc":
@@ -131,7 +139,7 @@ const Collection = ({ collections }: CollectionProps) => {
             <Head title="My Collection" />
             <div className="container mx-auto min-w-full p-6 bg-neutral-950 text-gray-300 min-h-screen pt-20">
                 <MiniNav />
-                <h1 className="text-5xl  mb-12 font-header md:text-center">My Collection</h1>
+                <h1 className="text-5xl  mb-12 font-header text-center">My Collection</h1>
 
                 
                 {!auth.user ? (
@@ -139,7 +147,7 @@ const Collection = ({ collections }: CollectionProps) => {
                         listType="collection"
                     />
                 ) : (
-                    <>
+                    
                     <div className="mb-8 font-mono max-w-lg text-center mx-auto">
                     <h4 className="text-2xl font-semibold mb-4">Sort Collection</h4>
 
@@ -156,13 +164,30 @@ const Collection = ({ collections }: CollectionProps) => {
                         searchFilter={searchFilter}
                         searchType="collection"
                     />
-                </div>
+
+                    <ViewToggle 
+                        view={view}
+                        onToggle={handleViewToggle}
+                    />
+                    </div>
+                    )}
+
                 
-                    {filteredAndSortedItems.length === 0 ? (
-                        <p className='font-mono text-red-600'>Your collection is empty</p>
+                
+                    {view === 'list' ? (
+                        <AlbumListItem
+                            album={collections}
+                            onShowDeleteDialog={showDeleteDialog}
+                            onCloseDeleteDialog={closeDeleteDialog}
+                            onDelete={handleRemoveFromCollection}
+                            dialogAlbumId={dialogAlbumId}
+                            context="collection"
+                        />
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 bg-neutral-950 font-mono"
-                        >
+                        filteredAndSortedItems.length === 0 ? (
+                            <p className='font-mono text-red-600 text-center'>Your collection is empty</p>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 bg-neutral-950 font-mono">
                             {filteredAndSortedItems.map((album) => (
                                 <AlbumCard
                                     key={album.album_id}
@@ -172,16 +197,15 @@ const Collection = ({ collections }: CollectionProps) => {
                                     onShowDeleteDialog={showDeleteDialog}
                                     onCloseDeleteDialog={closeDeleteDialog}
                                     onDelete={handleRemoveFromCollection}
-                                /> 
+                                />
                             ))}
                         </div>
-                    )}
-                    </>
-                )}
-                <Footer /> 
+                    )
+                        )}
+                    <Footer /> 
+                </div>
             </div>
-        </div>
-    );
+        );
 };
 
 Collection.layout = (page: React.ReactNode) => <Header children={page} />;

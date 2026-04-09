@@ -9,6 +9,8 @@ import MiniNav from '@/Components/MiniNav';
 import AuthPromptPage from '@/Components/AuthPromptPage';
 import SearchBar from '@/Components/SearchBar';
 import AlbumCard, { Album } from '@/Components/AlbumCard';
+import AlbumListItem from '@/Components/AlbumListItem';
+import ViewToggle, { ViewToggleProps } from '@/Components/ViewToggle';
 
 type WishlistProps = {
     wishlist: Album[];
@@ -19,6 +21,10 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
     const [sortOption, setSortOption] = useState<string>('');
     const [filter, setFilter] = useState<string>('');
     const [dialogAlbumId, setDialogAlbumId] = useState<number | null>(null);
+     const [view, setView] = useState<"card" |"list">(() => {
+        const savedView = localStorage.getItem('collectionView');
+        return (savedView === 'card' || savedView === 'list') ? savedView : 'card';
+    });
 
 
     useEffect(() => {
@@ -32,7 +38,13 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
         { value: 'artistDesc', label: 'Artist Name (Z to A)' }
     ];
 
- const showDeleteDialog = (album: Album) => {
+    
+    const handleViewToggle = (newView: "card" | "list") => {
+        setView(newView);
+        localStorage.setItem('collectionView', newView);
+    };
+
+    const showDeleteDialog = (album: Album) => {
         const dialog = document.getElementById(`delete-dialog-${album.album_id}`);
         if (dialog) {
             (dialog as any).showModal();
@@ -129,20 +141,20 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
 
     return (
         <div>
-            <Head title="My Wishlist" />
-            <div className="container mx-auto p-6 bg-neutral-950 text-gray-300 min-h-screen pt-20 min-w-full">
+            <Head title="My Collection" />
+            <div className="container mx-auto min-w-full p-6 bg-neutral-950 text-gray-300 min-h-screen pt-20">
                 <MiniNav />
-                <h1 className="text-5xl  mb-12 font-header md:text-center">My Wishlist</h1>
+                <h1 className="text-5xl  mb-12 font-header text-center">My Collection</h1>
 
                 
                 {!auth.user ? (
-                    <AuthPromptPage 
-                        listType="wishlist"
+                    <AuthPromptPage
+                        listType="collection"
                     />
                 ) : (
-                    <>
+                    
                     <div className="mb-8 font-mono max-w-lg text-center mx-auto">
-                    <h4 className="text-2xl font-semibold mb-4">Sort Wishlist</h4>
+                    <h4 className="text-2xl font-semibold mb-4">Sort Collection</h4>
 
                     <p className="py-2">By default your list will be sorted by the date you added the album to it</p>
 
@@ -155,35 +167,50 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
                     <SearchBar
                         filter={filter}
                         searchFilter={searchFilter}
-                        searchType="wishlist"
+                        searchType="collection"
                     />
-                </div>
+
+                    <ViewToggle 
+                        view={view}
+                        onToggle={handleViewToggle}
+                    />
+                    </div>
+                    )}
+
                 
-                    {filteredAndSortedItems.length === 0 ? (
-                        <p className='font-mono text-red-600'>Your wishlist is empty</p>
+                
+                    {view === 'list' ? (
+                        <AlbumListItem
+                            album={wishlistItems}
+                            onShowDeleteDialog={showDeleteDialog}
+                            onCloseDeleteDialog={closeDeleteDialog}
+                            onDelete={handleRemoveFromWishlist}
+                            dialogAlbumId={dialogAlbumId}
+                            context="wishlist"
+                        />
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 bg-neutral-950 font-mono">
+                        filteredAndSortedItems.length === 0 ? (
+                            <p className='font-mono text-red-600 text-center'>Your collection is empty</p>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 bg-neutral-950 font-mono">
                             {filteredAndSortedItems.map((album) => (
-                                                            
                                 <AlbumCard
                                     key={album.album_id}
                                     album={album}
                                     dialogAlbumId={dialogAlbumId}
-                                    context="wishlist"
+                                    context="collection"
                                     onShowDeleteDialog={showDeleteDialog}
                                     onCloseDeleteDialog={closeDeleteDialog}
                                     onDelete={handleRemoveFromWishlist}
                                 />
                             ))}
                         </div>
-                    )}
-                    </>
-                )}
-
-                <Footer />
+                    )
+                        )}
+                    <Footer /> 
+                </div>
             </div>
-        </div>
-    );
+        );
 };
 
 Wishlist.layout = (page: React.ReactNode) => <Header children={page} />;

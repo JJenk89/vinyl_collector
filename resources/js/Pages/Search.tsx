@@ -199,8 +199,10 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
                     <Paginator
                         page={page}
                         pagination={pagination}
+                        isSearching={isSearching}
                         searchDiscogsFn={searchDiscogsFn}
                         scrollToTop={scrollToTop}
+                        
                     />
                 )}
             </div>

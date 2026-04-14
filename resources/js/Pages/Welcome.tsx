@@ -19,16 +19,17 @@ function Welcome() {
         <>
             <div className="p-4 text-center bg-neutral-950 text-gray-300 min-h-screen pt-20">
                 <h1 className="text-5xl   font-header ">Home</h1>
-                <h3 className='text-m text-xl m-2 font-mono pt-4 pb-8'>Welcome to My Vinyl<span className='text-green-600 font-semibold'>{auth.user ? ` ${auth.user && auth.user.name}` : null}</span>!</h3>
+                <h3 className='text-2xl font-bold m-2 font-mono pt-8 pb-8'>Welcome to My Vinyl<span className='text-green-600 font-semibold'>{auth.user ? ` ${auth.user && auth.user.name}` : null}</span>!</h3>
 
                 <div >
                     {!auth.user ? 
                         <>
-                            <div className="p-6 font-mono m-4 max-w-3xl mx-auto text-left">
-                                <p className='mb-4'>This app is designed for record hunters.</p>
-                                <p className='mb-4'>In a shop an ever need to look up the album? Want to know the track list, when it was released and who recorded it?</p>
-                                <p className='mb-4'>Find it all here! You can then create a collection to look up while you're hunting for your latest treasured LP, or create a wishlist of albums you want.</p>
-                                <p className='mb-4'>Interested?</p>
+                            <div className="p-6 font-mono m-4 max-w-md mx-auto text-center border-l-4 rounded-md border-indigo-700 bg-slate-950 mb-24">
+                                <p className='mb-12'>This app is built for record hunters.</p>
+                                <p className='mb-12'>Ever been in a record shop and needed to quickly look up an album?
+                                Check the tracklist, release year, or who recorded it right on the spot.</p>
+                                <p className='mb-12'>Discover everything you need in seconds. Then build your own collection or create a wishlist for your next crate-digging session.</p>
+                                <p className='mb-12'>Start tracking your vinyls here.</p>
                             </div>
                             <AuthComponent />
                         </>

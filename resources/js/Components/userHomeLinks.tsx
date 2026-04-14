@@ -2,13 +2,13 @@ import { Link } from "@inertiajs/react";
 
 const UserHomeLinks = () => {
     return ( 
-        <div className="p-6 text-center font-mono">
+        <div className="p-6 text-center font-mono max-w-md mx-auto">
             <h2 className="text-xl font-semibold ">Get Started</h2>
-            <div className="p-6 flex flex-col space-y-4 text-lg">
-                <Link href="/search" className="underline text-blue-600">Search for Albums</Link>
-                <Link href="/collection" className="underline text-yellow-800">My Collection</Link>
-                <Link href="/wishlist" className="underline text-green-600">My Wishlist</Link>
-                <Link href="/dashboard" className="underline text-purple-600">My Account</Link>
+            <div className="p-6 flex flex-col space-y-8 text-lg">
+                <Link href="/search" className="underline text-blue-200 max-w-xl border border-blue-600 rounded-lg  p-2">Search for Albums</Link>
+                <Link href="/collection" className="underline text-yellow-200 max-w-xl border border-yellow-600 rounded-lg  p-2">My Collection</Link>
+                <Link href="/wishlist" className="underline text-green-200 max-w-xl border border-green-600 rounded-lg  p-2">My Wishlist</Link>
+                <Link href="/dashboard" className="underline text-purple-200 max-w-xl border border-purple-600 rounded-lg  p-2">My Account</Link>
             </div>
         </div>
      );

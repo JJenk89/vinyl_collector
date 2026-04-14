@@ -1,9 +1,11 @@
 import axios from 'axios';
 
-export const searchDiscogs = async (query: string) => {
-    const response = await axios.get('/api/discogs/search', {
+export const searchDiscogs = async (query: string, page: number = 1) => {
+    const response = await axios.get(`api/discogs/search`, {
         params: {
-            query
+            query,
+            page,
+            format: 'vinyl'
         }
     });
     return response.data;

@@ -8,6 +8,7 @@ import Footer from '@/Components/Footer';
 import Spinner from '@/Components/Spinner';
 import AlbumCardSearch from '@/Components/AlbumCardSearch';
 import { DiscogsRelease, DiscogsArtist, DiscogsTrack } from '@/types/discogApiTypes';
+import Paginator from '@/Components/Paginator';
 
 // Types
 import { User } from '@/types/user';
@@ -37,6 +38,14 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
     const [collectionErrors, setCollectionErrors] = useState<Record<string, string>>({});
     const [pendingCollectionId, setPendingCollectionId] = useState<string | number | null>(null);
     const [searchError, setSearchError] = useState<string | null>(null);
+    //pagination states
+    const [page, setPage] = useState(1);
+    const [pagination, setPagination] = useState<{ 
+        page: number; 
+        pages: number; 
+        per_page: number; 
+        items: number 
+    } | null>(null);
 
     const { errors } = usePage<PageProps>().props;
     const { auth } = usePage().props as {
@@ -58,21 +67,28 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
         }
     }, [errors, pendingCollectionId]);
 
-    const searchDiscogsFn = async () => {
+    const searchDiscogsFn = async (pageNumber: number = 1) => {
         if (!search.trim()) return;
 
         setIsSearching(true);
         setSearchError(null);
 
         try {
-            const data = await searchDiscogs(search.trim());
+            const data = await searchDiscogs(search.trim(), pageNumber);
             setResults(data.results ?? []);
+            setPagination(data.pagination ?? null);
+            setPage(pageNumber);
         } catch (err) {
             console.error('Discogs search error:', err);
             setSearchError('Something went wrong. Please try again.');
         } finally {
             setIsSearching(false);
         }
+    };
+
+    const handleSearchSubmit = () => {
+        setPage(1);
+        searchDiscogsFn(1);
     };
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,6 +122,10 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
         });
     };
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0 });
+    };
+
     return (
         <div className="text-gray-300 bg-neutral-950 height-full min-h-screen">
             <div className="p-4 text-center pt-20">
@@ -113,7 +133,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
             </div>
 
             <div className="font-mono p-2 m-2 max-w-lg md:mx-auto">
-                <form role="search" onSubmit={(e) => { e.preventDefault(); searchDiscogsFn(); }}>
+                <form role="search" onSubmit={(e) => { e.preventDefault(); handleSearchSubmit(); }}>
                     <label htmlFor="searchbar" className="block mb-2 text-lg">
                         Search for an album
                     </label>
@@ -122,7 +142,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
                             type="search"
                             id="searchbar"
                             name="searchbar"
-                            placeholder="Search by artist name or album"
+                            placeholder="e.g. Pink Floyd, The Dark Side of the Moon"
                             value={search}
                             onChange={handleSearchChange}
                             onKeyDown={handleKeyDown}
@@ -146,7 +166,19 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
                 <h2 className="p-4 text-2xl font-mono text-center pt-16">Search Results</h2>
             )}
 
-            <div className="grid grid-cols-1 grid-rows-4 gap-4 md:grid-cols-3 lg:grid-cols-5 p-4 min-h-screen">
+            <div>
+                {pagination && pagination.pages > 1 && (
+                    <Paginator
+                        page={page}
+                        pagination={pagination}
+                        isSearching={isSearching}
+                        searchDiscogsFn={searchDiscogsFn}
+                        scrollToTop={scrollToTop}
+                    />
+                )}
+            </div>
+
+            <div className="grid grid-cols-1 grid-rows-1 gap-4 md:grid-cols-3 lg:grid-cols-5 p-4 min-h-screen">
                 {results.map((item) => (
                     <AlbumCardSearch
                         key={item.id}
@@ -160,6 +192,17 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
                         handleAddToCollection={handleAddToCollection}
                     />
                 ))}
+            </div>
+
+            <div>
+                {pagination && pagination.pages > 1 && (
+                    <Paginator
+                        page={page}
+                        pagination={pagination}
+                        searchDiscogsFn={searchDiscogsFn}
+                        scrollToTop={scrollToTop}
+                    />
+                )}
             </div>
 
             <Footer />

@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactNode } from 'react';
+import { useState, useEffect, ReactNode, useRef } from 'react';
 import { usePage, useRemember, router } from '@inertiajs/react';
 import Header from '@/Layouts/Header';
 import { searchDiscogs } from '@/API';
@@ -53,6 +53,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
     };
 
     // Validation error handling
+    // Use effects to watch for changes in errors and pending IDs, and update error states accordingly
     useEffect(() => {
         if (errors?.wishlist && pendingWishlistId) {
             setWishlistErrors(prev => ({ ...prev, [pendingWishlistId]: errors.wishlist }));
@@ -67,6 +68,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
         }
     }, [errors, pendingCollectionId]);
 
+    // Searches Discogs API and updates results and pagination state
     const searchDiscogsFn = async (pageNumber: number = 1) => {
         if (!search.trim()) return;
 
@@ -86,7 +88,10 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
         }
     };
 
+    const dismissKeyboardRef = useRef<HTMLInputElement>(null);
+
     const handleSearchSubmit = () => {
+        dismissKeyboardRef.current?.blur();
         setPage(1);
         searchDiscogsFn(1);
     };
@@ -122,6 +127,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
         });
     };
 
+    // Scrolls window to top after pagination changes
     const scrollToTop = () => {
         window.scrollTo({ top: 0 });
     };
@@ -139,6 +145,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
                     </label>
                     <div className="flex">
                         <input
+                            ref={dismissKeyboardRef}
                             type="search"
                             id="searchbar"
                             name="searchbar"

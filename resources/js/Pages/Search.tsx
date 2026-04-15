@@ -1,17 +1,19 @@
 import { useState, useEffect, ReactNode, useRef } from 'react';
 import { usePage, useRemember, router } from '@inertiajs/react';
-import Header from '@/Layouts/Header';
 import { searchDiscogs } from '@/API';
+
+import Header from '@/Layouts/Header';
 
 // Component imports
 import Footer from '@/Components/Footer';
 import Spinner from '@/Components/Spinner';
 import AlbumCardSearch from '@/Components/AlbumCardSearch';
-import { DiscogsRelease, DiscogsArtist, DiscogsTrack } from '@/types/discogApiTypes';
 import Paginator from '@/Components/Paginator';
 
 // Types
 import { User } from '@/types/user';
+import { DiscogsRelease, DiscogsArtist, DiscogsTrack } from '@/types/discogApiTypes';
+
 
 interface PageProps {
     errors: Record<string, string>;
@@ -90,6 +92,8 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
 
     const dismissKeyboardRef = useRef<HTMLInputElement>(null);
 
+    // Handles page changes from paginator and
+    // dismisses keyboard on mobile
     const handleSearchSubmit = () => {
         dismissKeyboardRef.current?.blur();
         setPage(1);
@@ -100,6 +104,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
         setSearch(e.target.value);
     };
 
+    // Allows user to press Enter key to submit search
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') searchDiscogsFn();
     };
@@ -158,7 +163,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
                         />
                         <button
                             type="submit"
-                            className="p-2 bg-neutral-950 text-gray-300 border-2 border-green-800 rounded"
+                            className="p-2 bg-neutral-950 text-gray-300 border-2 border-green-800 rounded hover:bg-green-800"
                             aria-label="Perform search"
                         >
                             Search

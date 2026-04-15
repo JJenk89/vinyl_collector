@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ParseDiscogsData;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +14,7 @@ use App\Models\Wishlist;
 
 class CollectionController extends Controller
 {
+    use ParseDiscogsData;
 
     public function addToCollection(Request $request)
     {
@@ -32,10 +34,10 @@ class CollectionController extends Controller
         Collection::create([
             'user_id' => Auth::id(),
             'album_id' => $albumData['id'],
-            'title' => $albumData['title'],
-            'label' => $albumData['label'][0] ?? $albumData['label'] ?? null,
-            'artist' => $albumData['artists'][0]['name'] ?? $albumData['artist'] ?? 'Unknown Artist',
-            'cover_url' => $albumData['images'][0]['resource_url'] ?? $albumData['cover_image'] ?? $albumData['thumb'] ?? null,
+            'title' => $this->parseAlbumTitle($albumData),
+            'label' => $this->parseLabel($albumData),
+            'artist' => $this->parseArtist($albumData),
+            'cover_url' => $this->parseCoverUrl($albumData),
         ]);
 
         if ($request->boolean('removeFromWishlist')) {

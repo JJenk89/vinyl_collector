@@ -6,7 +6,7 @@ import PrimaryButton from "./PrimaryButton";
 const AlbumListItem = ({ album, dialogAlbumId, onShowDeleteDialog, onCloseDeleteDialog, onDelete, context }: AlbumCardProps) => {
     return ( 
         <div className="album-list-item">
-            <table className="border border-indigo-700 text-left max-w-screen mx-auto ">
+            <table className="border border-indigo-700 text-left max-w-7xl mx-auto ">
                 <tbody className="text-gray-300 font-mono">
                     <tr className=" ">
                         <th className="font-black border-r border-indigo-600  ">Album</th>

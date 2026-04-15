@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ParseDiscogsData;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Wishlist;
@@ -12,6 +13,8 @@ use Illuminate\Foundation\Application;
 
 class WishlistController extends Controller
 {
+    use ParseDiscogsData;
+
     public function addToWishlist(Request $request)
     {
         $albumData = json_decode($request->input('album'), true);
@@ -30,10 +33,10 @@ class WishlistController extends Controller
         Wishlist::create([
             'user_id' => Auth::id(),
             'album_id' => $albumData['id'],
-            'title' => $albumData['title'],
-            'artist' => $albumData['artists'][0]['name'] ?? $albumData['artist'] ?? 'Unknown Artist',
-            'label' => $albumData['label'][0] ?? $albumData['label'] ?? null,
-            'cover_url' => $albumData['images'][0]['resource_url'] ?? $albumData['cover_image'] ?? $albumData['thumb'] ?? null,
+            'title' => $this->parseAlbumTitle($albumData),
+            'artist' => $this->parseArtist($albumData),
+            'label' => $this->parseLabel($albumData),
+            'cover_url' => $this->parseCoverUrl($albumData),
         ]);
 
 

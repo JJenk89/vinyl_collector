@@ -78,7 +78,7 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
         });
     };
 
-    // Get the artist name properly
+    
     const getArtistName = () => {
         if (displayData.artists && displayData.artists.length > 0) {
             return displayData.artists[0].name;
@@ -139,7 +139,7 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
     }
 
     return (
-        <div className='bg-neutral-950 font-mono min-h-screen'>
+        <div className='bg-neutral-950 font-mono min-h-screen pt-16'>
             <MiniNav />
 
             <div className="p-4 text-center">

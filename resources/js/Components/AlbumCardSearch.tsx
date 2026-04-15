@@ -15,6 +15,17 @@ type AlbumCardSearchProps = {
     handleAddToCollection: (item: DiscogsRelease) => void;
 };
 
+function parseDiscogsTitle(rawTitle: string): { artist: string; album: string } {
+    const separatorIndex = rawTitle.indexOf(' - ');
+    if (separatorIndex === -1) {
+        return { artist: 'Unknown Artist', album: rawTitle };
+    }
+    return {
+        artist: rawTitle.slice(0, separatorIndex).trim(),
+        album: rawTitle.slice(separatorIndex + 3).trim()
+    };
+}
+
 const AlbumCardSearch = ({
     item,
     auth,
@@ -25,9 +36,12 @@ const AlbumCardSearch = ({
     handleAddToWishList,
     handleAddToCollection,
 }: AlbumCardSearchProps) => {
+    const { artist, album } = parseDiscogsTitle(item.title);
+
     return (
         <div className="p-4 border-2 border-indigo-700 rounded max-h-full flex flex-col justify-between">
-            <h3 className="text-lg font-bold pb-2">{item.title}</h3>
+            <h3 className="text-lg font-bold pb-2">{album}</h3>
+            <p className="text-gray-400 text-sm mb-2 italic">{artist}</p>
 
             {item.cover_image ? (
                 <Link href={`/album/${item.id}`}>

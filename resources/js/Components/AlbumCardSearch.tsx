@@ -69,13 +69,13 @@ const AlbumCardSearch = ({
                 </p>
             )}
 
-            <div className="buttons flex flex-col gap-2 mt-4">
+            <div className="buttons flex flex-col gap-2 mt-4 items-center">
                 {!auth.user ? (
                     <AuthPrompt />
                 ) : (
                     <>
                         <PrimaryButton
-                            className="mt-2 bg-yellow-600 hover:bg-yellow-400 wishlist-btn"
+                            className="flex align-middle justify-center mt-2 w-52 bg-yellow-600 hover:bg-yellow-400 wishlist-btn border-yellow-600 font-mono"
                             onClick={() => handleAddToWishList(item)}
                             disabled={addToWishlist[item.id] || addToCollection[item.id]}
                         >
@@ -83,7 +83,7 @@ const AlbumCardSearch = ({
                         </PrimaryButton>
 
                         <PrimaryButton
-                            className="mt-2 collection-btn"
+                            className="flex align-middle justify-center mt-2 w-52 collection-btn bg-green-600 hover:bg-green-600 border-green-600 font-mono"
                             onClick={() => handleAddToCollection(item)}
                             disabled={addToCollection[item.id]}
                         >

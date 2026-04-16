@@ -15,7 +15,8 @@ class DiscogsController extends Controller
         $request->validate([
             'query' => 'required|string|max:200',
             'type'  => 'nullable|string|in:release,master,artist,label',
-            'page' => 'nullable|integer|min:1'
+            'page' => 'nullable|integer|min:1',
+            'per_page' => 'nullable|integer|in:6,12,24'
         ]);
 
         $queryParams = [
@@ -23,7 +24,7 @@ class DiscogsController extends Controller
             'type' => $request->input('type', 'release'),
             'format' => 'vinyl',
             'page' => $request->input('page', 1),
-            'per_page' => 6,
+            'per_page' => $request->input('per_page', 6),
             'key'  => config('services.discogs.consumer_key'),
             'secret' => config('services.discogs.consumer_secret'),
         ];

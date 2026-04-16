@@ -40,6 +40,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
     const [collectionErrors, setCollectionErrors] = useState<Record<string, string>>({});
     const [pendingCollectionId, setPendingCollectionId] = useState<string | number | null>(null);
     const [searchError, setSearchError] = useState<string | null>(null);
+
     //pagination states
     const [page, setPage] = useState(1);
     const [pagination, setPagination] = useState<{ 
@@ -48,6 +49,9 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
         per_page: number; 
         items: number 
     } | null>(null);
+
+    //pagination select
+    const [perPage, setPerPage] = useRemember<number>(6, 'perPage');
 
     const { errors } = usePage<PageProps>().props;
     const { auth } = usePage().props as {
@@ -71,14 +75,14 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
     }, [errors, pendingCollectionId]);
 
     // Searches Discogs API and updates results and pagination state
-    const searchDiscogsFn = async (pageNumber: number = 1) => {
+    const searchDiscogsFn = async (pageNumber: number = 1, resultsPerPage: number = perPage) => {
         if (!search.trim()) return;
 
         setIsSearching(true);
         setSearchError(null);
 
         try {
-            const data = await searchDiscogs(search.trim(), pageNumber);
+            const data = await searchDiscogs(search.trim(), pageNumber, resultsPerPage);
             setResults(data.results ?? []);
             setPagination(data.pagination ?? null);
             setPage(pageNumber);
@@ -132,6 +136,12 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
         });
     };
 
+    const handlePerPageChange = (newPerPage: number) => {
+        setPerPage(newPerPage);
+        searchDiscogsFn(1, newPerPage);
+        scrollToTop();
+    };
+
     // Scrolls window to top after pagination changes
     const scrollToTop = () => {
         window.scrollTo({ top: 0 });
@@ -169,6 +179,8 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
                             Search
                         </button>
                     </div>
+
+                    
                 </form>
                 {isSearching && <Spinner />}
                 {searchError && <p className="mt-2 text-red-500 font-mono">{searchError}</p>}
@@ -180,6 +192,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
 
             <div>
                 {pagination && pagination.pages > 1 && (
+                    <>
                     <Paginator
                         page={page}
                         pagination={pagination}
@@ -187,7 +200,24 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
                         searchDiscogsFn={searchDiscogsFn}
                         scrollToTop={scrollToTop}
                     />
+
+                    <div className="selector font-mono flex items-center justify-center mt-4">
+                        <p>Results per page:</p>
+                        <select 
+                            value={perPage} 
+                            onChange={(e) => handlePerPageChange(Number(e.target.value))}
+                            className="m-4 p-2 w-16 border-2 rounded border-yellow-800 focus:border-green-400 bg-neutral-950"
+                            aria-label="Select number of results per page"
+                        >
+                            <option value={6}>6</option>
+                            <option value={12}>12</option>
+                            <option value={24}>24</option>
+                        </select>
+                    </div>
+                    </>
                 )}
+
+                
             </div>
 
             <div className="grid grid-cols-1 grid-rows-1 gap-4 md:grid-cols-3 lg:grid-cols-5 p-4 min-h-screen">

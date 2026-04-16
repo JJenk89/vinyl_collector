@@ -12,7 +12,7 @@ export default defineConfig({
     ],
     // DELETE AFTER TESTING - ONLY FOR LOCAL DEVELOPMENT!!
 
-    /*     server: {
+    /*   server: {
         host: "0.0.0.0", // Listen on all network interfaces
         port: 5173,
         strictPort: true, // Fail if port taken

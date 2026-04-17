@@ -137,7 +137,7 @@ const Collection = ({ collections }: CollectionProps) => {
     return (
         <div>
             <Head title="My Collection" />
-            <div className="container mx-auto min-w-full p-6 bg-neutral-950 text-gray-300 min-h-screen pt-20">
+            <div className="container mx-auto min-w-full bg-neutral-950 text-gray-300 min-h-screen pt-20">
                 <MiniNav />
                 <h1 className="text-5xl  mb-12 font-header text-center">My Collection</h1>
 
@@ -148,7 +148,7 @@ const Collection = ({ collections }: CollectionProps) => {
                     />
                 ) : (
                     
-                    <div className="mb-8 font-mono max-w-lg text-center mx-auto">
+                    <div className="mb-8 p-2 font-mono max-w-lg text-center mx-auto">
                     <h4 className="text-2xl font-semibold mb-4">Sort Collection</h4>
 
                     <p className="py-2">By default your list will be sorted by the date you added the album to it</p>
@@ -187,7 +187,7 @@ const Collection = ({ collections }: CollectionProps) => {
                         filteredAndSortedItems.length === 0 ? (
                             <p className='font-mono text-red-600 text-center'>Your collection is empty</p>
                         ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 bg-neutral-950 font-mono">
+                            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 m-2 gap-4 bg-neutral-950 font-mono">
                             {filteredAndSortedItems.map((album) => (
                                 <AlbumCard
                                     key={album.album_id}

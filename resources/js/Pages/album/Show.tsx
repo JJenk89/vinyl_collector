@@ -153,10 +153,10 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
                     ) : (
                         <>
                             <button 
-                                className={`p-3 rounded w-full max-w-48 transition-colors ${
+                                className={`p-3 rounded w-full max-w-40 max-h-28 h-18 transition-colors ${
                                     isInCollection 
-                                        ? 'bg-green-200 cursor-not-allowed border-2 bg-opacity-60 border-green-300 text-gray-100' 
-                                        : 'bg-green-600 hover:bg-green-700 text-white'
+                                        ? 'bg-green-900 cursor-not-allowed border bg-opacity-30 border-green-600 text-gray-100' 
+                                        : 'bg-green-900 bg-opacity-60 border border-green-600 hover:bg-green-700 text-white'
                                 }`}
                                 onClick={handleAddtoCollection}
                                 disabled={isInCollection}
@@ -166,10 +166,10 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
 
                             {shouldShowWishlistButton && (
                                 <button 
-                                    className={`p-3 rounded w-full max-w-48 transition-colors ${
+                                    className={`p-3 rounded w-full max-w-40 max-h-28 h-18 transition-colors ${
                                         isInWishlist 
-                                            ? 'bg-yellow-200 cursor-not-allowed border-2 bg-opacity-60 border-yellow-300 text-gray-100' 
-                                            : 'bg-yellow-600 hover:bg-yellow-700 text-white'
+                                            ? 'bg-transparent cursor-not-allowed border bg-opacity-30 border-yellow-600 bg-yellow-950  text-gray-100' 
+                                            : 'bg-transparent hover:bg-yellow-700 text-white'
                                     }`}
                                     onClick={handleAddtoWishlist}
                                     disabled={isInWishlist}

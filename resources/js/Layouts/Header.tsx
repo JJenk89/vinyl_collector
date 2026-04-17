@@ -61,27 +61,27 @@ const Header = ({ children }: { children: ReactNode }) => {
 
             {/* Mobile Navigation Menu */}
             {isOpen && (
-                <nav className="fixed top-16 left-0 right-0 bottom-0 bg-black flex flex-col items-center space-y-10 z-40 pt-20 overflow-y-auto text-xl font-mono ">
+                <nav className="fixed top-16 left-0 right-0 bottom-0 bg-neutral-950 flex flex-col items-center space-y-10 z-40 pt-20 overflow-y-auto text-xl font-mono ">
 
-                    <Link onClick={() => setIsOpen(false)} href="/" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 mt-4 ${url === '/' ? "bg-purple-900 p-0.5 rounded" : "bg-black"}`}>
+                    <Link onClick={() => setIsOpen(false)} href="/" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 mt-4 ${url === '/' ? "bg-purple-900 p-0.5 rounded" : "bg-neutral-950"}`}>
                         Home
                     </Link>
 
-                    <Link onClick={() => setIsOpen(false)} href="/search" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/search' ? "bg-purple-950 p-0.5 rounded" : "bg-black"}`}>
+                    <Link onClick={() => setIsOpen(false)} href="/search" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/search' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
                         Album Finder
                     </Link>
 
-                    <Link onClick={() => setIsOpen(false)} href="/collection" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/collection' ? "bg-purple-950 p-0.5 rounded" : "bg-black"}`}>
+                    <Link onClick={() => setIsOpen(false)} href="/collection" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/collection' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
                         View Collection
                     </Link>
                     
-                    <Link onClick={() => setIsOpen(false)} href="/wishlist" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/wishlist' ? "bg-purple-950 p-0.5 rounded" : "bg-black"}`}>
+                    <Link onClick={() => setIsOpen(false)} href="/wishlist" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/wishlist' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
                         View Wishlist
                     </Link>
                     {auth.user ? 
                     
                     <>
-                    <Link onClick={() => setIsOpen(false)} href="/dashboard" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/dashboard' ? "bg-purple-950 p-0.5 rounded" : "bg-black"}`}>
+                    <Link onClick={() => setIsOpen(false)} href="/dashboard" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/dashboard' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
                         My Account</Link>
                     
                     <Link

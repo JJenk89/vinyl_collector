@@ -6,12 +6,12 @@ import PrimaryButton from "./PrimaryButton";
 const AlbumListItem = ({ album, dialogAlbumId, onShowDeleteDialog, onCloseDeleteDialog, onDelete, context }: AlbumCardProps) => {
     return ( 
         <div className="album-list-item">
-            <table className="border border-indigo-700 text-left max-w-7xl mx-auto ">
+            <table className="border border-indigo-700 text-left max-w-7xl w-svw ">
                 <tbody className="text-gray-300 font-mono">
                     <tr className=" ">
                         <th className="font-black border-r border-indigo-600  ">Album</th>
                         <th className="font-black border-r border-indigo-600 ">Artist</th>
-                        <th className="font-black border-r border-indigo-600 ">Label</th>
+                        {/* <th className="font-black border-r border-indigo-600 ">Label</th> */}
                         <th className="">Actions</th>
                         
                     </tr>
@@ -43,7 +43,7 @@ const AlbumListItem = ({ album, dialogAlbumId, onShowDeleteDialog, onCloseDelete
                             <tr key={album.album_id} className="border border-indigo-600 text-left">
                                 <td className="border-r border-indigo-600">{album.title}</td>
                                 <td className="border-r border-indigo-600">{album.artist}</td>
-                                <td className="border-r border-indigo-600">{album.label || "N/A"}</td>
+                                {/* <td className="border-r border-indigo-600">{album.label || "N/A"}</td> */}
                                 <td>
                                     <PrimaryButton>
                                         <Link href={`/album/${album.album_id}`}>View</Link>

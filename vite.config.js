@@ -22,7 +22,7 @@ export default defineConfig({
         },
         allowedHosts: [
             // Prevent DNS rebinding attacks
-            "***.168.***.**",
+            "***.***.***.**",
             ".localhost",
         ],
     }, */

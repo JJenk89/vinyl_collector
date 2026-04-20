@@ -49,6 +49,7 @@ const AlbumCardSearch = ({
                         src={item.cover_image}
                         alt={item.title}
                         className="w-full h-auto border border-yellow-700 p-1 rounded-md"
+                        loading="lazy"
                     />
                 </Link>
             ) : <Link href={`/album/${item.id}`}>

@@ -176,7 +176,7 @@ const Collection = ({ collections }: CollectionProps) => {
                 
                     {view === 'list' ? (
                         <AlbumListItem
-                            album={collections}
+                            albums={collections}
                             onShowDeleteDialog={showDeleteDialog}
                             onCloseDeleteDialog={closeDeleteDialog}
                             onDelete={handleRemoveFromCollection}
@@ -191,7 +191,7 @@ const Collection = ({ collections }: CollectionProps) => {
                             {filteredAndSortedItems.map((album) => (
                                 <AlbumCard
                                     key={album.album_id}
-                                    album={album}
+                                    albums={album}
                                     dialogAlbumId={dialogAlbumId}
                                     context="collection"
                                     onShowDeleteDialog={showDeleteDialog}

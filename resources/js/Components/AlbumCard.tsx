@@ -3,6 +3,7 @@ import PrimaryButton from './PrimaryButton';
 import DeleteButton from './DeleteButton';
 
 export type Album = {
+    albums: Album[];
     album_id: number;
     title: string;
     label: string | null;
@@ -11,7 +12,7 @@ export type Album = {
 };
 
 export type AlbumCardProps = {
-    album: Album;
+    albums: Album | any;
     dialogAlbumId: number | null;
     context: 'wishlist' | 'collection';
     onShowDeleteDialog: (album: Album) => void;
@@ -20,7 +21,7 @@ export type AlbumCardProps = {
 }
 
 const AlbumCard = ({
-    album,
+    albums,
     dialogAlbumId,
     context,
     onShowDeleteDialog,
@@ -33,44 +34,44 @@ const AlbumCard = ({
 
             <dialog
                 className="bg-neutral-950 border-2 border-red-600 rounded-md p-6 text-gray-300 z-50 backdrop:bg-gray-900 backdrop:opacity-70"
-                id={`delete-dialog-${album.album_id}`}
-                open={dialogAlbumId === album.album_id}
-                onClose={() => onCloseDeleteDialog(album)}
+                id={`delete-dialog-${albums.album_id}`}
+                open={dialogAlbumId === albums.album_id}
+                onClose={() => onCloseDeleteDialog(albums)}
             >
                 <p>
                     Are you sure you want to delete{' '}
-                    <span className="font-bold">{album.title}</span>{' '}
+                    <span className="font-bold">{albums.title}</span>{' '}
                     from your {context}?
                 </p>
                 <div className="flex justify-end gap-4 mt-4">
-                    <PrimaryButton onClick={() => onCloseDeleteDialog(album)}>
+                    <PrimaryButton onClick={() => onCloseDeleteDialog(albums)}>
                         Cancel
                     </PrimaryButton>
-                    <DeleteButton onClick={() => onDelete(album)}>
+                    <DeleteButton onClick={() => onDelete(albums)}>
                         Delete
                     </DeleteButton>
                 </div>
             </dialog>
 
             <div className="text-center flex flex-col content-center items-center mb-4">
-                <h2 className="text-xl font-semibold">{album.title}</h2>
-                <p className="text-gray-500 mt-2 mb-2">{album.artist}</p>
+                <h2 className="text-xl font-semibold">{albums.title}</h2>
+                <p className="text-gray-500 mt-2 mb-2">{albums.artist}</p>
                 <img
-                    src={album.cover_url}
-                    alt={`${album.title} cover`}
+                    src={albums.cover_url}
+                    alt={`${albums.title} cover`}
                     className="w-min h-48 object-contain border border-yellow-700 rounded-md mb-2 p-1"
                 />
             </div>
 
-            <p className="text-gray-500 text-sm pb-2">{album.label || 'Label not available'}</p>
+            <p className="text-gray-500 text-sm pb-2">{albums.label || 'Label not available'}</p>
 
             <div className="flex justify-between gap-4">
                 <PrimaryButton>
-                    <Link href={`/album/${album.album_id}`}>
+                    <Link href={`/album/${albums.album_id}`}>
                         View
                     </Link>
                 </PrimaryButton>
-                <DeleteButton onClick={() => onShowDeleteDialog(album)}>
+                <DeleteButton onClick={() => onShowDeleteDialog(albums)}>
                     Delete
                 </DeleteButton>
             </div>

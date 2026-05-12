@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 import DeleteButton from "./DeleteButton";
 import PrimaryButton from "./PrimaryButton";
 
-const AlbumListItem = ({ album, dialogAlbumId, onShowDeleteDialog, onCloseDeleteDialog, onDelete, context }: AlbumCardProps) => {
+const AlbumListItem = ({ albums, dialogAlbumId, onShowDeleteDialog, onCloseDeleteDialog, onDelete, context }: AlbumCardProps) => {
     return ( 
         <div className="album-list-item">
             <table className="border border-indigo-700 text-left max-w-7xl w-svw ">
@@ -15,7 +15,7 @@ const AlbumListItem = ({ album, dialogAlbumId, onShowDeleteDialog, onCloseDelete
                         <th className="">Actions</th>
                         
                     </tr>
-                    {album.map((album: Album) => (
+                    {(albums as any).map((album: Album) => (
                         <>
                             
                             <dialog

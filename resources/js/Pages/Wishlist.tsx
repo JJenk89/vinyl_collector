@@ -181,7 +181,7 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
                 
                     {view === 'list' ? (
                         <AlbumListItem
-                            album={wishlistItems}
+                            albums={wishlistItems}
                             onShowDeleteDialog={showDeleteDialog}
                             onCloseDeleteDialog={closeDeleteDialog}
                             onDelete={handleRemoveFromWishlist}
@@ -196,7 +196,7 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
                             {filteredAndSortedItems.map((album) => (
                                 <AlbumCard
                                     key={album.album_id}
-                                    album={album}
+                                    albums={album}
                                     dialogAlbumId={dialogAlbumId}
                                     context="wishlist"
                                     onShowDeleteDialog={showDeleteDialog}

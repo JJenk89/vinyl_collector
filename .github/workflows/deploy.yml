@@ -1,0 +1,75 @@
+# This GitHub Actions workflow automates the deployment of a Laravel application to a production server.
+#
+# It uses SSH to connect to the server, pull the latest code, install dependencies, build assets, run migrations, and clear caches.
+#
+# Secrets are in the GitHub repository settings.
+
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # -------------------------------------------------------
+      # 1. Checkout code (needed for any pre-deploy steps)
+      # -------------------------------------------------------
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # -------------------------------------------------------
+      # 2. Setup SSH
+      # -------------------------------------------------------
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # -------------------------------------------------------
+      # 3. Add server to known hosts (prevents interactive prompt)
+      # -------------------------------------------------------
+      - name: Add server to known hosts
+        run: |
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      # -------------------------------------------------------
+      # 4. Deploy
+      # -------------------------------------------------------
+      - name: Deploy to server
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            set -e
+
+            cd ${{ secrets.APP_PATH }}
+
+            echo ">>> Pulling latest code..."
+            git pull origin main
+
+            echo ">>> Installing PHP dependencies..."
+            composer install --no-dev --optimize-autoloader
+
+            echo ">>> Installing Node dependencies..."
+            npm ci
+
+            echo ">>> Building frontend assets..."
+            npm run build
+
+            echo ">>> Running migrations..."
+            php artisan migrate --force
+
+            echo ">>> Clearing and rebuilding caches..."
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            echo ">>> Restarting queue worker (if running)..."
+            php artisan queue:restart 2>/dev/null || true
+
+            echo ">>> Deployment complete."
+          EOF

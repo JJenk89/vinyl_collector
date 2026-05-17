@@ -2,9 +2,11 @@
 
 **An app to help record hunters find records and track their collections.**
 
-![My Vinyl](placeholder-for-screenshot.png)
+![My Vinyl](/public/screenshots/vinyl-desktop.png)
+![Mobile](/public/screenshots/vinyl-mob.webp)
 
-*Live site: [URL to be added after deployment]*
+
+*Live site: [https://myvinyl.cc]*
 
 ---
 

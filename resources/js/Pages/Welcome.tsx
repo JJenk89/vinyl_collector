@@ -19,7 +19,7 @@ function Welcome() {
         <>
             <div className="p-4 text-center bg-neutral-950 text-gray-300 min-h-screen pt-20">
                 <h1 className="text-5xl   font-header ">Home</h1>
-                <h3 className='text-2xl font-bold m-2 font-mono pt-8 pb-8'>Welcome to My Vinyl<span className='text-green-600 font-semibold'>{auth.user ? ` ${auth.user && auth.user.name}` : null}</span>!</h3>
+                <h2 className='text-2xl font-bold m-2 font-mono pt-8 pb-8'>Welcome to My Vinyl<span className='text-green-600 font-semibold'>{auth.user ? ` ${auth.user && auth.user.name}` : null}</span>!</h2>
 
                 <div >
                     {!auth.user ? 

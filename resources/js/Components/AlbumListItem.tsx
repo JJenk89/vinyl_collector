@@ -5,7 +5,7 @@ import PrimaryButton from "./PrimaryButton";
 
 const AlbumListItem = ({ albums, dialogAlbumId, onShowDeleteDialog, onCloseDeleteDialog, onDelete, context }: AlbumCardProps) => {
     return ( 
-        <div className="album-list-item">
+        <div className="album-list-item flex justify-center">
             <table className="border border-indigo-700 text-left max-w-7xl w-svw ">
                 <tbody className="text-gray-300 font-mono">
                     <tr className=" ">

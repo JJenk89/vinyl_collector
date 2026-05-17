@@ -46,7 +46,9 @@ const AlbumListItem = ({ albums, dialogAlbumId, onShowDeleteDialog, onCloseDelet
                                 {/* <td className="border-r border-indigo-600">{album.label || "N/A"}</td> */}
                                 <td>
                                     <PrimaryButton>
-                                        <Link href={`/album/${album.album_id}`}>View</Link>
+                                        <Link className="h-full w-full flex items-center justify-center" href={`/album/${album.album_id}`}>
+                                            View
+                                        </Link>
                                     </PrimaryButton>
                                 </td>
                                 <td>

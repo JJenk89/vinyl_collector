@@ -67,7 +67,7 @@ const AlbumCard = ({
 
             <div className="flex justify-between gap-4">
                 <PrimaryButton>
-                    <Link href={`/album/${albums.album_id}`}>
+                    <Link className="h-full w-full flex items-center justify-center" href={`/album/${albums.album_id}`}>
                         View
                     </Link>
                 </PrimaryButton>

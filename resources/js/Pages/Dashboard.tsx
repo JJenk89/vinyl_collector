@@ -10,9 +10,9 @@ export default function Dashboard() {
 
     return (
         <AuthenticatedLayout
-            header={
+           header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-300 bg-neutral-950">
-                    {user.name}'s Dashboard
+                    Dashboard
                 </h2>
             }
         >

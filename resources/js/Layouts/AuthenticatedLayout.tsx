@@ -26,7 +26,7 @@ export default function Authenticated({
             
                     <div className=" pb-1 pt-4">
                         <div className="px-4 mb-8">
-                            <div className="text-xl font-medium text-green-600 mb-2">
+                            <div className="text-xl font-medium text-green-600 mb-6">
                                 {user.name}
                             </div>
                             <div className="text-sm font-medium text-gray-100">

@@ -5,7 +5,6 @@ import Header from '@/Layouts/Header';
 // Component imports
 import Footer from '@/Components/Footer';
 import SortSelect from '@/Components/SortList';
-import MiniNav from '@/Components/MiniNav';
 import AuthPromptPage from '@/Components/AuthPromptPage';
 import SearchBar from '@/Components/SearchBar';
 import AlbumCard, { Album } from '@/Components/AlbumCard';
@@ -138,7 +137,7 @@ const Collection = ({ collections }: CollectionProps) => {
         <div>
             <Head title="My Collection" />
             <div className="container mx-auto min-w-full bg-neutral-950 text-gray-300 min-h-screen pt-20">
-                <MiniNav />
+                
                 <h1 className="text-5xl  mb-12 font-header text-center">My Collection</h1>
 
                 

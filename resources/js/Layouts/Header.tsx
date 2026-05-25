@@ -43,10 +43,10 @@ const Header = ({ children }: { children: ReactNode }) => {
                         Album Finder
                     </Link>
                     <Link href="/collection" className={`text-1xl text-gray-200 mx-3 hover:underline rounded  ${url === '/collection' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
-                        View Collection
+                        My Collection
                     </Link>
                     <Link href="/wishlist" className={`text-1xl text-gray-200 mx-3 hover:underline rounded  ${url === '/wishlist' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
-                        View Wishlist
+                        My Wishlist
                     </Link>
                     {auth.user ? <Link onClick={() => setIsOpen(false)} href="/dashboard" className={`text-1xl text-gray-200 mx-3 hover:underline rounded ${url === '/dashboard' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
                         My Account</Link> : null}
@@ -72,11 +72,11 @@ const Header = ({ children }: { children: ReactNode }) => {
                     </Link>
 
                     <Link onClick={() => setIsOpen(false)} href="/collection" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/collection' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
-                        View Collection
+                        My Collection
                     </Link>
                     
                     <Link onClick={() => setIsOpen(false)} href="/wishlist" className={`text-1xl text-gray-200 hover:bg-yellow-700 rounded hover:p-1 p-2 ${url === '/wishlist' ? "bg-purple-950 p-0.5 rounded" : "bg-neutral-950"}`}>
-                        View Wishlist
+                        My Wishlist
                     </Link>
                     {auth.user ? 
                     

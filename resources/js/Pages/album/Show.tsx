@@ -1,7 +1,6 @@
 import { ReactNode, useState, useEffect } from 'react';
 import Header from '@/Layouts/Header';
 import { router, usePage } from '@inertiajs/react';
-import MiniNav from '@/Components/MiniNav';
 import AuthPrompt from '@/Components/AuthPrompt';
 import Spinner from '@/Components/Spinner';
 import { getAlbumDetails } from '@/API';
@@ -130,7 +129,6 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
     if (loading) {
         return (
             <div className='bg-neutral-950 font-mono min-h-screen'>
-                <MiniNav />
                 <div className="flex justify-center items-center h-64">
                     <Spinner />
                 </div>
@@ -140,7 +138,6 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
 
     return (
         <div className='bg-neutral-950 font-mono min-h-screen pt-16'>
-            <MiniNav />
 
             <div className="p-4 text-center">
                 <h1 className="text-4xl font-black text-gray-300 font-mono">{getAlbumTitle()}</h1>
@@ -169,7 +166,7 @@ const Album = ({ album, userWishlistIds = [], userCollectionIds = [] }: AlbumPro
                                     className={`p-3 rounded w-full max-w-40 max-h-28 h-18 transition-colors ${
                                         isInWishlist 
                                             ? 'bg-transparent cursor-not-allowed border bg-opacity-30 border-yellow-600 bg-yellow-950  text-gray-100' 
-                                            : 'bg-transparent hover:bg-yellow-700 text-white'
+                                            : 'bg-transparent hover:bg-yellow-700 text-white border border-yellow-600'
                                     }`}
                                     onClick={handleAddtoWishlist}
                                     disabled={isInWishlist}

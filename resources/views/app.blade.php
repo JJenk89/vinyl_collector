@@ -8,6 +8,8 @@
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
     <link rel="preload" href="/assets/Record.svg" as="image" type="image/svg+xml" />
+    <link rel="icon" type="image/png" href="{{ asset('/android-chrome-192x192.png') }}" sizes="192x192" />
+    <link rel="apple-touch-icon" type="image/png" href="{{ asset('/apple-touch-icon.png') }}" sizes="180x180" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -20,6 +22,8 @@
     <meta property="og:image" content="{{ asset('assets/OG.png') }}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+
+
     <!-- Scripts -->
     @routes
     @viteReactRefresh

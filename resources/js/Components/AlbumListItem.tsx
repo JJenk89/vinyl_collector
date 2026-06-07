@@ -11,7 +11,6 @@ const AlbumListItem = ({ albums, dialogAlbumId, onShowDeleteDialog, onCloseDelet
                     <tr className=" ">
                         <th className="font-black border-r border-indigo-600  ">Album</th>
                         <th className="font-black border-r border-indigo-600 ">Artist</th>
-                        {/* <th className="font-black border-r border-indigo-600 ">Label</th> */}
                         <th className="">Actions</th>
                         
                     </tr>

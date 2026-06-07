@@ -11,8 +11,15 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <!-- <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" /> -->
 
+    <!-- Open Graph Metadata -->
+    <meta property="og:title" content="{{ config('app.name', 'Laravel') }}" />
+    <meta property="og:description" content="A simple, retro themed app for record collectors to manage their collections." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ url('/') }}" />
+    <meta property="og:image" content="{{ asset('assets/OG.png') }}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <!-- Scripts -->
     @routes
     @viteReactRefresh

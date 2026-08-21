@@ -10,6 +10,7 @@ import SearchBar from '@/Components/SearchBar';
 import AlbumCard, { Album } from '@/Components/AlbumCard';
 import AlbumListItem from '@/Components/AlbumListItem';
 import ViewToggle, { ViewToggleProps } from '@/Components/ViewToggle';
+import ScrollToTop from '@/Components/ScrollBtn';
 
 type CollectionProps = {
     collections: Album[];
@@ -203,6 +204,7 @@ const Collection = ({ collections }: CollectionProps) => {
                         )}
                     <Footer /> 
                 </div>
+                <ScrollToTop />
             </div>
         );
 };

@@ -10,6 +10,7 @@ import SearchBar from '@/Components/SearchBar';
 import AlbumCard, { Album } from '@/Components/AlbumCard';
 import AlbumListItem from '@/Components/AlbumListItem';
 import ViewToggle, { ViewToggleProps } from '@/Components/ViewToggle';
+import ScrollToTop from '@/Components/ScrollBtn';
 
 type WishlistProps = {
     wishlist: Album[];
@@ -208,6 +209,7 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
                         )}
                     <Footer /> 
                 </div>
+                <ScrollToTop />
             </div>
         );
 };

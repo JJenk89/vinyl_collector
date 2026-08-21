@@ -171,6 +171,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
                             aria-label="Search Discogs by album or artist name"
                             className="w-2/3 p-2 border-2 rounded border-yellow-800 focus:border-green-400 bg-neutral-950"
                         />
+                        <input type="reset" value="Clear" onClick={() => setSearch('')} className="p-2 bg-neutral-950 text-gray-300 border-2 border-yellow-800 rounded hover:bg-yellow-800 ml-2 mr-2" aria-label="Clear search input" />
                         <button
                             type="submit"
                             className="p-2 bg-neutral-950 text-gray-300 border-2 border-green-800 rounded hover:bg-green-800"

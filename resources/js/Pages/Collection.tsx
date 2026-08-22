@@ -11,6 +11,7 @@ import AlbumCard, { Album } from '@/Components/AlbumCard';
 import AlbumListItem from '@/Components/AlbumListItem';
 import ViewToggle, { ViewToggleProps } from '@/Components/ViewToggle';
 import ScrollToTop from '@/Components/ScrollBtn';
+import ItemCounter from '@/Components/ItemCounter';
 
 type CollectionProps = {
     collections: Album[];
@@ -163,6 +164,11 @@ const Collection = ({ collections }: CollectionProps) => {
                         filter={filter}
                         searchFilter={searchFilter}
                         searchType="collection"
+                    />
+
+                    <ItemCounter
+                        itemLength={filteredAndSortedItems}
+                        context="collection"
                     />
 
                     <ViewToggle 

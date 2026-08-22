@@ -11,6 +11,7 @@ import AlbumCard, { Album } from '@/Components/AlbumCard';
 import AlbumListItem from '@/Components/AlbumListItem';
 import ViewToggle, { ViewToggleProps } from '@/Components/ViewToggle';
 import ScrollToTop from '@/Components/ScrollBtn';
+import ItemCounter from '@/Components/ItemCounter';
 
 type WishlistProps = {
     wishlist: Album[];
@@ -168,6 +169,11 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
                         filter={filter}
                         searchFilter={searchFilter}
                         searchType="wishlist"
+                    />
+
+                    <ItemCounter
+                        itemLength={filteredAndSortedItems}
+                        context="wishlist"
                     />
 
                     <ViewToggle 

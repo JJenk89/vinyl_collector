@@ -8,7 +8,6 @@ import Footer from '@/Components/Footer';
 import AuthPromptPage from '@/Components/AuthPromptPage';
 import SearchBar from '@/Components/SearchBar';
 import AlbumCard, { Album } from '@/Components/AlbumCard';
-import AlbumListItem from '@/Components/AlbumListItem';
 import ViewToggle, { ViewToggleProps } from '@/Components/ViewToggle';
 import ScrollToTop from '@/Components/ScrollBtn';
 import ItemCounter from '@/Components/ItemCounter';
@@ -172,7 +171,7 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
                     />
 
                     <ItemCounter
-                        itemLength={filteredAndSortedItems}
+                        itemLength={wishlistItems}
                         context="wishlist"
                     />
 
@@ -185,33 +184,27 @@ const Wishlist = ({ wishlist }: WishlistProps) => {
 
                 
                 
-                    {view === 'list' ? (
-                        <AlbumListItem
-                            albums={wishlistItems}
-                            onShowDeleteDialog={showDeleteDialog}
-                            onCloseDeleteDialog={closeDeleteDialog}
-                            onDelete={handleRemoveFromWishlist}
-                            dialogAlbumId={dialogAlbumId}
-                            context="wishlist"
-                        />
-                    ) : (
-                        filteredAndSortedItems.length === 0 ? (
+                    {filteredAndSortedItems.length === 0 ? (
                             <p className='font-mono text-red-600 text-center'>Your wishlist is empty</p>
                         ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 m-2 bg-neutral-950 font-mono">
-                            {filteredAndSortedItems.map((album) => (
-                                <AlbumCard
-                                    key={album.album_id}
-                                    albums={album}
-                                    dialogAlbumId={dialogAlbumId}
-                                    context="wishlist"
-                                    onShowDeleteDialog={showDeleteDialog}
-                                    onCloseDeleteDialog={closeDeleteDialog}
-                                    onDelete={handleRemoveFromWishlist}
-                                />
-                            ))}
-                        </div>
-                    )
+                            <div className={
+                                view === 'list'
+                                    ? "flex flex-col gap-2 m-2 max-w-4xl mx-2"
+                                    : "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 m-2 gap-4 bg-neutral-950 font-mono"
+                            }>
+                                {filteredAndSortedItems.map((album) => (
+                                    <AlbumCard
+                                        key={album.album_id}
+                                        albums={album}
+                                        view={view}
+                                        dialogAlbumId={dialogAlbumId}
+                                        context="wishlist"
+                                        onShowDeleteDialog={showDeleteDialog}
+                                        onCloseDeleteDialog={closeDeleteDialog}
+                                        onDelete={handleRemoveFromWishlist}
+                                    />
+                                ))}
+                            </div>
                         )}
                     <Footer /> 
                 </div>

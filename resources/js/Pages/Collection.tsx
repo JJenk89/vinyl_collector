@@ -8,7 +8,6 @@ import SortSelect from '@/Components/SortList';
 import AuthPromptPage from '@/Components/AuthPromptPage';
 import SearchBar from '@/Components/SearchBar';
 import AlbumCard, { Album } from '@/Components/AlbumCard';
-import AlbumListItem from '@/Components/AlbumListItem';
 import ViewToggle, { ViewToggleProps } from '@/Components/ViewToggle';
 import ScrollToTop from '@/Components/ScrollBtn';
 import ItemCounter from '@/Components/ItemCounter';
@@ -167,7 +166,7 @@ const Collection = ({ collections }: CollectionProps) => {
                     />
 
                     <ItemCounter
-                        itemLength={filteredAndSortedItems}
+                        itemLength={collectionItems}
                         context="collection"
                     />
 
@@ -180,24 +179,19 @@ const Collection = ({ collections }: CollectionProps) => {
 
                 
                 
-                    {view === 'list' ? (
-                        <AlbumListItem
-                            albums={collections}
-                            onShowDeleteDialog={showDeleteDialog}
-                            onCloseDeleteDialog={closeDeleteDialog}
-                            onDelete={handleRemoveFromCollection}
-                            dialogAlbumId={dialogAlbumId}
-                            context="collection"
-                        />
+                    {filteredAndSortedItems.length === 0 ? (
+                        <p className='font-mono text-red-600 text-center'>Your collection is empty</p>
                     ) : (
-                        filteredAndSortedItems.length === 0 ? (
-                            <p className='font-mono text-red-600 text-center'>Your collection is empty</p>
-                        ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 m-2 gap-4 bg-neutral-950 font-mono">
+                        <div className={
+                            view === 'list'
+                                ? "flex flex-col gap-2 m-2 max-w-4xl mx-2"
+                                : "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 m-2 gap-4 bg-neutral-950 font-mono"
+                        }>
                             {filteredAndSortedItems.map((album) => (
                                 <AlbumCard
                                     key={album.album_id}
                                     albums={album}
+                                    view={view}
                                     dialogAlbumId={dialogAlbumId}
                                     context="collection"
                                     onShowDeleteDialog={showDeleteDialog}
@@ -206,8 +200,7 @@ const Collection = ({ collections }: CollectionProps) => {
                                 />
                             ))}
                         </div>
-                    )
-                        )}
+                    )}
                     <Footer /> 
                 </div>
                 <ScrollToTop />

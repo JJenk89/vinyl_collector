@@ -13,6 +13,7 @@ import Paginator from '@/Components/Paginator';
 // Types
 import { User } from '@/types/user';
 import { DiscogsRelease, DiscogsArtist, DiscogsTrack } from '@/types/discogApiTypes';
+import ScrollToTop from '@/Components/ScrollBtn';
 
 
 interface PageProps {
@@ -156,7 +157,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
             <div className="font-mono p-2 m-2 max-w-lg md:mx-auto">
                 <form role="search" onSubmit={(e) => { e.preventDefault(); handleSearchSubmit(); }}>
                     <label htmlFor="searchbar" className="block mb-2 text-lg">
-                        Search for an album
+                        Enter an album, artist or band name:
                     </label>
                     <div className="flex">
                         <input
@@ -164,7 +165,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
                             type="search"
                             id="searchbar"
                             name="searchbar"
-                            placeholder="e.g. Pink Floyd, The Dark Side of the Moon"
+                            placeholder="e.g. Pink Floyd The Dark Side of the Moon"
                             value={search}
                             onChange={handleSearchChange}
                             onKeyDown={handleKeyDown}
@@ -249,7 +250,7 @@ function Search({ userWishlistIds = [], userCollectionIds = [] }: PageProps) {
                     />
                 )}
             </div>
-
+            <ScrollToTop />
             <Footer />
         </div>
     );

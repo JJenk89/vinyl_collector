@@ -184,7 +184,7 @@ const Collection = ({ collections }: CollectionProps) => {
                     ) : (
                         <div className={
                             view === 'list'
-                                ? "flex flex-col gap-2 m-2 max-w-4xl mx-2"
+                                ? "flex flex-col gap-1 m-2 max-w-2xl mx-auto justify-center items-center bg-neutral-950 font-mono"
                                 : "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 m-2 gap-4 bg-neutral-950 font-mono"
                         }>
                             {filteredAndSortedItems.map((album) => (

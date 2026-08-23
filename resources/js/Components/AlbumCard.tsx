@@ -38,7 +38,7 @@ const AlbumCard = ({
             className={
                 isList
                     ? "bg-neutral-950 border border-indigo-700 rounded-md px-4 py-3 flex items-center justify-between gap-4 w-full"
-                    : "bg-neutral-950 shadow-md rounded-lg p-4 border border-indigo-700 max-h-full flex flex-col justify-between"
+                    : "bg-neutral-950 shadow-md rounded-lg p-4 border border-indigo-700 max-h-full flex flex-col justify-between items-center h-full"
             }
         >
             <dialog
@@ -82,9 +82,9 @@ const AlbumCard = ({
                 </>
             ) : (
                 <>
-                    <div className="text-center flex flex-col content-center items-center mb-4">
-                        <h2 className="text-xl font-semibold">{albums.title}</h2>
-                        <p className="text-gray-500 mt-2 mb-2">{albums.artist}</p>
+                    <div className="text-center flex flex-col content-center items-center w-full max-h-content h-full justify-between">
+                        <h2 className="text-xl font-semibold line-clamp-2 min-h-[3.5rem]">{albums.title}</h2>
+                        <p className="text-gray-500 mt-2 mb-2 line-clamp-1">{albums.artist}</p>
                         <img
                             src={albums.cover_url}
                             alt={`${albums.title} cover`}
@@ -92,9 +92,9 @@ const AlbumCard = ({
                         />
                     </div>
 
-                    <p className="text-gray-500 text-sm pb-2">{albums.label || 'Label not available'}</p>
+                    <p className="text-gray-500 text-sm p-4">{albums.label || 'Label not available'}</p>
 
-                    <div className="flex justify-between gap-4">
+                    <div className="flex justify-evenly gap-4">
                         <PrimaryButton>
                             <Link className="h-full w-full flex items-center justify-center" href={`/album/${albums.album_id}`}>
                                 View

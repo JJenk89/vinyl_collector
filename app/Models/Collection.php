@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Collection extends Model
 {
+
+    use HasFactory;
+
     protected $fillable = ['album_id', 'title', 'label', 'artist', 'user_id', 'cover_url'];
 
     //get the user that owns the collection item
